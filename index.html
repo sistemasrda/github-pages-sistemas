@@ -103,6 +103,253 @@
             border: none;
             cursor: pointer;
         }
+   
+    </div>
+
+    <div class="content">
+        <h1>Sistema de Inventario de Equipos</h1>
+
+        <!-- Formulario para agregar equipos -->
+        <form id="formEquipo">
+            <div>
+                <label for="usuario">Nombre de Usuario:</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            <div>
+                <label for="numEmpleado">Número de Empleado:</label>
+                <input type="text" id="numEmpleado" name="numEmpleado" required>
+            </div>
+            <div>
+                <label for="puesto">Puesto:</label>
+                <input type="text" id="puesto" name="puesto" required>
+            </div>
+            <div>
+                <label for="area">Área:</label>
+                <input type="text" id="area" name="area" required>
+            </div>
+            <div>
+                <label for="tipoEquipo">Tipo de Equipo:</label>
+                <input type="text" id="tipoEquipo" name="tipoEquipo" required>
+            </div>
+            <div>
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" required>
+            </div>
+            <div>
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" required>
+            </div>
+            <div>
+                <label for="numSerie">Número de Serie:</label>
+                <input type="text" id="numSerie" name="numSerie" required>
+            </div>
+            <div>
+                <label for="ram">RAM:</label>
+                <input type="text" id="ram" name="ram" required>
+            </div>
+            <div>
+                <label for="almacenamiento">Almacenamiento:</label>
+                <input type="text" id="almacenamiento" name="almacenamiento" required>
+            </div>
+            <div>
+                <label for="ip">IP:</label>
+                <input type="text" id="ip" name="ip" required>
+            </div>
+            <div>
+                <label for="ipWifi">IP WiFi:</label>
+                <input type="text" id="ipWifi" name="ipWifi" required>
+            </div>
+            <div>
+                <label for="mac">MAC:</label>
+                <input type="text" id="mac" name="mac" required>
+            </div>
+            <div>
+                <label for="idProducto">ID del Producto:</label>
+                <input type="text" id="idProducto" name="idProducto" required>
+            </div>
+            <div>
+                <label for="hostname">Hostname:</label>
+                <input type="text" id="hostname" name="hostname" required>
+            </div>
+            <div>
+                <label for="kitTecladoMouse">Kit Teclado y Mouse:</label>
+                <input type="text" id="kitTecladoMouse" name="kitTecladoMouse" required>
+            </div>
+            <div>
+                <label for="monitor">Monitor:</label>
+                <input type="text" id="monitor" name="monitor" required>
+            </div>
+            <div>
+                <label for="baseLaptop">Base para Laptop:</label>
+                <input type="text" id="baseLaptop" name="baseLaptop" required>
+            </div>
+            <div>
+                <label for="modeloTelefono">Modelo de Teléfono:</label>
+                <input type="text" id="modeloTelefono" name="modeloTelefono" required>
+            </div>
+            <div>
+                <label for="macTelefono">MAC Teléfono:</label>
+                <input type="text" id="macTelefono" name="macTelefono" required>
+            </div>
+            <div>
+                <label for="extension">Extensión:</label>
+                <input type="text" id="extension" name="extension" required>
+            </div>
+            <div>
+                <label for="marcaCelular">Marca de Celular:</label>
+                <input type="text" id="marcaCelular" name="marcaCelular" required>
+            </div>
+            <div>
+                <label for="modeloCelular">Modelo de Celular:</label>
+                <input type="text" id="modeloCelular" name="modeloCelular" required>
+            </div>
+            <div>
+                <label for="ipCelular">IP Celular:</label>
+                <input type="text" id="ipCelular" name="ipCelular" required>
+            </div>
+            <div>
+                <label for="macCelular">MAC Celular:</label>
+                <input type="text" id="macCelular" name="macCelular" required>
+            </div>
+            <div>
+                <label for="otros">Otros:</label>
+                <input type="text" id="otros" name="otros" required>
+            </div>
+
+            <button type="button" onclick="agregarEquipo()">Guardar</button>
+            <button type="button" onclick="generarPDF()">Generar PDF</button>
+        </form>
+
+        <!-- Búsqueda por nombre de usuario -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario">
+            <button onclick="buscar()">Buscar</button>
+        </div>
+
+        <!-- Tabla de Inventario -->
+        <table id="tablaInventario">
+            <thead>
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Número de Empleado</th>
+                    <th>Puesto</th>
+                    <th>Área</th>
+                    <th>Tipo de Equipo</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Número de Serie</th>
+                    <th>RAM</th>
+                    <th>Almacenamiento</th>
+                    <th>IP</th>
+                    <th>IP WiFi</th>
+                    <th>MAC</th>
+                    <th>ID del Producto</th>
+                    <th>Hostname</th>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Inventario de Equipos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-video iframe {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-box input {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
