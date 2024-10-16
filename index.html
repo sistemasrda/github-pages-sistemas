@@ -6,181 +6,105 @@
     <title>Sistema de Inventario</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
         }
-        h1 {
-            text-align: center;
-        }
-        form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        label {
-            font-weight: bold;
-        }
-        input, select {
-            padding: 8px;
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
         }
-        button {
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        button:hover {
-            background-color: #218838;
+        .container {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 30px;
+            margin-top: 20px;
         }
         th, td {
+            padding: 10px;
             border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        #searchSection {
-            margin-bottom: 20px;
-        }
-        .baja {
-            background-color: red;
-            color: white;
+            text-align: left;
         }
         .reasignado {
-            background-color: green;
-            color: white;
+            background-color: #d4edda; /* Verde claro */
         }
-        #pdfButton {
-            background-color: #007bff;
-        }
-        #pdfButton:hover {
-            background-color: #0069d9;
+        .baja {
+            background-color: #f8d7da; /* Rojo claro */
         }
     </style>
 </head>
 <body>
 
-<h1>Sistema de Inventario</h1>
+<video class="background-video" autoplay loop muted>
+    <source src="3129595-uhd_3840_2160_30fps.mp4" type="video/mp4">
+    Tu navegador no soporta videos.
+</video>
 
-<div id="searchSection">
-    <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario" oninput="buscar()">
-</div>
+<div class="container">
+    <h1>Sistema de Inventario</h1>
+    <form id="formEquipo">
+        <input type="text" id="nombreUsuario" placeholder="Nombre de usuario" required>
+        <input type="text" id="numeroEmpleado" placeholder="Número de empleado" required>
+        <select id="empresa" required>
+            <option value="">Seleccionar Empresa</option>
+            <option value="Representaciones de audio">Representaciones de audio</option>
+            <option value="Equipos">Equipos</option>
+            <option value="Cintas">Cintas</option>
+            <option value="Ampere">Ampere</option>
+        </select>
+        <input type="text" id="puesto" placeholder="Puesto" required>
+        <input type="text" id="area" placeholder="Área" required>
+        <input type="text" id="tipoEquipo" placeholder="Tipo de equipo" required>
+        <input type="text" id="modelo" placeholder="Modelo" required>
+        <input type="text" id="marca" placeholder="Marca" required>
+        <input type="text" id="numeroSerie" placeholder="Número de serie" required>
+        <input type="text" id="ram" placeholder="RAM" required>
+        <input type="text" id="almacenamiento" placeholder="Almacenamiento" required>
+        <input type="text" id="ip" placeholder="IP" required>
+        <input type="text" id="ipWifi" placeholder="IP Wifi" required>
+        <input type="text" id="mac" placeholder="MAC" required>
+        <input type="text" id="idProducto" placeholder="ID del producto" required>
+        <input type="text" id="hostname" placeholder="Hostname" required>
+        <input type="text" id="usuarioSAP" placeholder="Usuario SAP" required>
+        <input type="text" id="tipoLicenciaSAP" placeholder="Tipo de Licencia SAP" required>
+        <input type="text" id="clickView" placeholder="ClickView" required>
+        <input type="text" id="kitTecladoMouse" placeholder="Kit Teclado y Mouse" required>
+        <input type="text" id="monitor" placeholder="Monitor" required>
+        <input type="text" id="baseLaptop" placeholder="Base para Laptop" required>
+        <input type="text" id="modeloTelefono" placeholder="Modelo de teléfono" required>
+        <input type="text" id="macTelefono" placeholder="MAC teléfono" required>
+        <input type="text" id="extension" placeholder="Extensión" required>
+        <input type="text" id="marcaCelular" placeholder="Marca celular" required>
+        <input type="text" id="modeloCelular" placeholder="Modelo celular" required>
+        <input type="text" id="ipCelular" placeholder="IP celular" required>
+        <input type="text" id="macCelular" placeholder="MAC celular" required>
+        <input type="text" id="otros" placeholder="Otros">
+        <select id="estado" required>
+            <option value="reasignado">Reasignado</option>
+            <option value="baja">Dado de baja</option>
+        </select>
+        <button type="button" onclick="guardarDatos()">Guardar</button>
+        <button type="button" onclick="mostrarDatos()">Mostrar Datos</button>
+        <button type="button" onclick="generarPDF()">Generar PDF</button>
+    </form>
 
-<form id="formEquipo">
-    <label for="nombreUsuario">Nombre de Usuario:</label>
-    <input type="text" id="nombreUsuario" required>
+    <h2>Buscar por Nombre de Usuario</h2>
+    <input type="text" id="searchInput" oninput="buscar()" placeholder="Buscar...">
 
-    <label for="numeroEmpleado">Número de Empleado:</label>
-    <input type="text" id="numeroEmpleado" required>
-
-    <label for="empresa">Empresa:</label>
-    <select id="empresa" required>
-        <option value="Representaciones de audio">Representaciones de audio</option>
-        <option value="Equipos y Cintas">Equipos y Cintas</option>
-        <option value="Ampere">Ampere</option>
-    </select>
-
-    <label for="puesto">Puesto:</label>
-    <input type="text" id="puesto" required>
-
-    <label for="area">Área:</label>
-    <input type="text" id="area" required>
-
-    <label for="tipoEquipo">Tipo de Equipo:</label>
-    <input type="text" id="tipoEquipo" required>
-
-    <label for="modelo">Modelo:</label>
-    <input type="text" id="modelo" required>
-
-    <label for="marca">Marca:</label>
-    <input type="text" id="marca" required>
-
-    <label for="numeroSerie">Número de Serie:</label>
-    <input type="text" id="numeroSerie" required>
-
-    <label for="ram">RAM:</label>
-    <input type="text" id="ram" required>
-
-    <label for="almacenamiento">Almacenamiento:</label>
-    <input type="text" id="almacenamiento" required>
-
-    <label for="ip">IP:</label>
-    <input type="text" id="ip" required>
-
-    <label for="ipWifi">IP Wifi:</label>
-    <input type="text" id="ipWifi" required>
-
-    <label for="mac">MAC:</label>
-    <input type="text" id="mac" required>
-
-    <label for="idProducto">ID del Producto:</label>
-    <input type="text" id="idProducto" required>
-
-    <label for="hostname">Hostname:</label>
-    <input type="text" id="hostname" required>
-
-    <label for="usuarioSAP">Usuario SAP:</label>
-    <input type="text" id="usuarioSAP" required>
-
-    <label for="tipoLicenciaSAP">Tipo de Licencia SAP:</label>
-    <input type="text" id="tipoLicenciaSAP" required>
-
-    <label for="clickView">ClickView:</label>
-    <input type="text" id="clickView" required>
-
-    <label for="kitTecladoMouse">Kit Teclado y Mouse:</label>
-    <input type="text" id="kitTecladoMouse" required>
-
-    <label for="monitor">Monitor:</label>
-    <input type="text" id="monitor" required>
-
-    <label for="baseLaptop">Base para Laptop:</label>
-    <input type="text" id="baseLaptop" required>
-
-    <label for="modeloTelefono">Modelo de Teléfono:</label>
-    <input type="text" id="modeloTelefono" required>
-
-    <label for="macTelefono">MAC Teléfono:</label>
-    <input type="text" id="macTelefono" required>
-
-    <label for="extension">Extensión:</label>
-    <input type="text" id="extension" required>
-
-    <label for="marcaCelular">Marca de Celular:</label>
-    <input type="text" id="marcaCelular" required>
-
-    <label for="modeloCelular">Modelo de Celular:</label>
-    <input type="text" id="modeloCelular" required>
-
-    <label for="ipCelular">IP Celular:</label>
-    <input type="text" id="ipCelular" required>
-
-    <label for="macCelular">MAC Celular:</label>
-    <input type="text" id="macCelular" required>
-
-    <label for="otros">Otros:</label>
-    <input type="text" id="otros">
-
-    <button type="button" onclick="guardarEquipo()">Guardar</button>
-</form>
-
-<button onclick="mostrarDatos()">Mostrar Datos</button>
-
-<div>
-    <h2>Dashboard</h2>
     <table id="tablaEquipos">
         <thead>
             <tr>
@@ -198,37 +122,36 @@
                 <th>IP</th>
                 <th>IP Wifi</th>
                 <th>MAC</th>
-                <th>ID del Producto</th>
+                <th>ID Producto</th>
                 <th>Hostname</th>
                 <th>Usuario SAP</th>
                 <th>Tipo de Licencia SAP</th>
                 <th>ClickView</th>
                 <th>Kit Teclado y Mouse</th>
                 <th>Monitor</th>
-                <th>Base para Laptop</th>
-                <th>Modelo de Teléfono</th>
+                <th>Base Laptop</th>
+                <th>Modelo Teléfono</th>
                 <th>MAC Teléfono</th>
                 <th>Extensión</th>
-                <th>Marca de Celular</th>
-                <th>Modelo de Celular</th>
+                <th>Marca Celular</th>
+                <th>Modelo Celular</th>
                 <th>IP Celular</th>
                 <th>MAC Celular</th>
                 <th>Otros</th>
-                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se llenarán los datos -->
+            <!-- Los equipos se agregarán aquí -->
         </tbody>
     </table>
 </div>
 
 <script>
-    const equipos = [];
+    let equipos = [];
     let editIndex = -1;
 
-    function guardarEquipo() {
+    function guardarDatos() {
         const equipo = {
             nombreUsuario: document.getElementById('nombreUsuario').value,
             numeroEmpleado: document.getElementById('numeroEmpleado').value,
@@ -270,54 +193,63 @@
             editIndex = -1;
         }
 
-        mostrarEquipos();
         document.getElementById('formEquipo').reset();
+        mostrarDatos();
     }
 
-    function mostrarEquipos() {
-        const tablaEquipos = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
-        tablaEquipos.innerHTML = ''; // Limpiar tabla
+    function mostrarDatos() {
+        const tabla = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
+        tabla.innerHTML = ''; // Limpiar tabla
 
         equipos.forEach((equipo, index) => {
-            const fila = tablaEquipos.insertRow();
-            for (const prop in equipo) {
-                const celda = fila.insertCell();
-                celda.textContent = equipo[prop];
-            }
-
-            // Botones para editar y eliminar
-            const celdaAcciones = fila.insertCell();
-            const botonEditar = document.createElement('button');
-            botonEditar.textContent = 'Editar';
-            botonEditar.onclick = () => editarEquipo(index);
-            celdaAcciones.appendChild(botonEditar);
-
-            const botonEliminar = document.createElement('button');
-            botonEliminar.textContent = 'Eliminar';
-            botonEliminar.onclick = () => eliminarEquipo(index);
-            celdaAcciones.appendChild(botonEliminar);
+            const row = tabla.insertRow();
+            row.innerHTML = `
+                <td>${equipo.nombreUsuario}</td>
+                <td>${equipo.numeroEmpleado}</td>
+                <td>${equipo.empresa}</td>
+                <td>${equipo.puesto}</td>
+                <td>${equipo.area}</td>
+                <td>${equipo.tipoEquipo}</td>
+                <td>${equipo.modelo}</td>
+                <td>${equipo.marca}</td>
+                <td>${equipo.numeroSerie}</td>
+                <td>${equipo.ram}</td>
+                <td>${equipo.almacenamiento}</td>
+                <td>${equipo.ip}</td>
+                <td>${equipo.ipWifi}</td>
+                <td>${equipo.mac}</td>
+                <td>${equipo.idProducto}</td>
+                <td>${equipo.hostname}</td>
+                <td>${equipo.usuarioSAP}</td>
+                <td>${equipo.tipoLicenciaSAP}</td>
+                <td>${equipo.clickView}</td>
+                <td>${equipo.kitTecladoMouse}</td>
+                <td>${equipo.monitor}</td>
+                <td>${equipo.baseLaptop}</td>
+                <td>${equipo.modeloTelefono}</td>
+                <td>${equipo.macTelefono}</td>
+                <td>${equipo.extension}</td>
+                <td>${equipo.marcaCelular}</td>
+                <td>${equipo.modeloCelular}</td>
+                <td>${equipo.ipCelular}</td>
+                <td>${equipo.macCelular}</td>
+                <td>${equipo.otros}</td>
+                <td>
+                    <button onclick="editar(${index})">Editar</button>
+                    <button onclick="eliminar(${index})">Eliminar</button>
+                </td>
+            `;
 
             // Cambiar color según el estado
-            if (equipo.estado === 'reasignado') {
-                fila.classList.add('reasignado');
-            } else if (equipo.estado === 'baja') {
-                fila.classList.add('baja');
+            if (equipo.estado === "reasignado") {
+                row.classList.add('reasignado');
+            } else if (equipo.estado === "baja") {
+                row.classList.add('baja');
             }
         });
     }
 
-    function buscar() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const tablaEquipos = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
-        const filas = tablaEquipos.getElementsByTagName('tr');
-
-        for (let i = 0; i < filas.length; i++) {
-            const celdaNombreUsuario = filas[i].cells[0].textContent.toLowerCase();
-            filas[i].style.display = celdaNombreUsuario.includes(query) ? '' : 'none';
-        }
-    }
-
-    function editarEquipo(index) {
+    function editar(index) {
         const equipo = equipos[index];
         document.getElementById('nombreUsuario').value = equipo.nombreUsuario;
         document.getElementById('numeroEmpleado').value = equipo.numeroEmpleado;
@@ -349,48 +281,68 @@
         document.getElementById('ipCelular').value = equipo.ipCelular;
         document.getElementById('macCelular').value = equipo.macCelular;
         document.getElementById('otros').value = equipo.otros;
+        document.getElementById('estado').value = equipo.estado;
         editIndex = index;
     }
 
-    function eliminarEquipo(index) {
+    function eliminar(index) {
         equipos.splice(index, 1);
-        mostrarEquipos();
+        mostrarDatos();
     }
 
-    function mostrarDatos() {
-        const tablaEquipos = document.getElementById('tablaEquipos');
-        tablaEquipos.style.display = 'block'; // Mostrar la tabla de equipos
+    function buscar() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const tabla = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
+        const filas = tabla.getElementsByTagName('tr');
+        
+        for (let i = 0; i < filas.length; i++) {
+            const nombreUsuario = filas[i].getElementsByTagName('td')[0].innerText.toLowerCase();
+            filas[i].style.display = nombreUsuario.includes(query) ? '' : 'none';
+        }
     }
 
     function generarPDF() {
-        let contenido = '<h1>Inventario de Equipos</h1><table><thead><tr>';
-        contenido += '<th>Nombre de Usuario</th><th>Número de Empleado</th><th>Empresa</th><th>Puesto</th><th>Área</th>';
-        contenido += '<th>Tipo de Equipo</th><th>Modelo</th><th>Marca</th><th>Número de Serie</th><th>RAM</th>';
-        contenido += '<th>Almacenamiento</th><th>IP</th><th>IP Wifi</th><th>MAC</th>';
-        contenido += '<th>ID del Producto</th><th>Hostname</th><th>Usuario SAP</th><th>Tipo de Licencia SAP</th>';
-        contenido += '<th>ClickView</th><th>Kit Teclado y Mouse</th><th>Monitor</th><th>Base para Laptop</th>';
-        contenido += '<th>Modelo de Teléfono</th><th>MAC Teléfono</th><th>Extensión</th>';
-        contenido += '<th>Marca de Celular</th><th>Modelo de Celular</th><th>IP Celular</th><th>MAC Celular</th>';
-        contenido += '<th>Otros</th></tr></thead><tbody>';
-
-        equipos.forEach(equipo => {
-            contenido += '<tr>';
-            for (const prop in equipo) {
-                contenido += `<td>${equipo[prop]}</td>`;
-            }
-            contenido += '</tr>';
+        let pdfContent = 'Sistema de Inventario\n\n';
+        equipos.forEach((equipo) => {
+            pdfContent += `Nombre de Usuario: ${equipo.nombreUsuario}\n`;
+            pdfContent += `Número de Empleado: ${equipo.numeroEmpleado}\n`;
+            pdfContent += `Empresa: ${equipo.empresa}\n`;
+            pdfContent += `Puesto: ${equipo.puesto}\n`;
+            pdfContent += `Área: ${equipo.area}\n`;
+            pdfContent += `Tipo de Equipo: ${equipo.tipoEquipo}\n`;
+            pdfContent += `Modelo: ${equipo.modelo}\n`;
+            pdfContent += `Marca: ${equipo.marca}\n`;
+            pdfContent += `Número de Serie: ${equipo.numeroSerie}\n`;
+            pdfContent += `RAM: ${equipo.ram}\n`;
+            pdfContent += `Almacenamiento: ${equipo.almacenamiento}\n`;
+            pdfContent += `IP: ${equipo.ip}\n`;
+            pdfContent += `IP Wifi: ${equipo.ipWifi}\n`;
+            pdfContent += `MAC: ${equipo.mac}\n`;
+            pdfContent += `ID Producto: ${equipo.idProducto}\n`;
+            pdfContent += `Hostname: ${equipo.hostname}\n`;
+            pdfContent += `Usuario SAP: ${equipo.usuarioSAP}\n`;
+            pdfContent += `Tipo de Licencia SAP: ${equipo.tipoLicenciaSAP}\n`;
+            pdfContent += `ClickView: ${equipo.clickView}\n`;
+            pdfContent += `Kit Teclado y Mouse: ${equipo.kitTecladoMouse}\n`;
+            pdfContent += `Monitor: ${equipo.monitor}\n`;
+            pdfContent += `Base Laptop: ${equipo.baseLaptop}\n`;
+            pdfContent += `Modelo Teléfono: ${equipo.modeloTelefono}\n`;
+            pdfContent += `MAC Teléfono: ${equipo.macTelefono}\n`;
+            pdfContent += `Extensión: ${equipo.extension}\n`;
+            pdfContent += `Marca Celular: ${equipo.marcaCelular}\n`;
+            pdfContent += `Modelo Celular: ${equipo.modeloCelular}\n`;
+            pdfContent += `IP Celular: ${equipo.ipCelular}\n`;
+            pdfContent += `MAC Celular: ${equipo.macCelular}\n`;
+            pdfContent += `Otros: ${equipo.otros}\n\n`;
         });
 
-        contenido += '</tbody></table>';
-
-        const ventana = window.open('', '', 'width=800,height=600');
-        ventana.document.write('<html><head><title>Inventario PDF</title>');
-        ventana.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 8px; }</style>');
-        ventana.document.write('</head><body>');
-        ventana.document.write(contenido);
-        ventana.document.write('</body></html>');
-        ventana.document.close();
-        ventana.print();
+        const blob = new Blob([pdfContent], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'inventario.pdf';
+        a.click();
+        URL.revokeObjectURL(url);
     }
 </script>
 
