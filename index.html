@@ -85,6 +85,23 @@
             border: none;
             cursor: pointer;
         }
+
+        .edit-mode {
+            background-color: #f0f0f0;
+        }
+
+        .save-btn {
+            background-color: #28a745;
+        }
+
+        .edit-btn {
+            background-color: #ffc107;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
     </style>
 </head>
 <body>
@@ -125,14 +142,6 @@
             <div>
                 <label for="numSerie">Número de Serie:</label>
                 <input type="text" id="numSerie" name="numSerie" required>
-            </div>
-             <div>
-                <label for="S.O">S.O:</label>
-                <input type="text" id="S.O" name="S.O" required>
-            </div>
-            <div>
-                <label for="Procesador">Procesador:</label>
-                <input type="text" id="Procesador" name="Procesador" required>
             </div>
             <div>
                 <label for="ram">RAM:</label>
@@ -220,7 +229,6 @@
             </div>
 
             <button type="button" onclick="agregarEquipo()">Guardar</button>
-            <button type="button" onclick="generarPDF()">Generar PDF</button>
         </form>
 
         <!-- Búsqueda por nombre de usuario -->
@@ -241,7 +249,6 @@
                     <th>Modelo</th>
                     <th>Marca</th>
                     <th>Número de Serie</th>
-                    <th>Procesador</th>
                     <th>RAM</th>
                     <th>Almacenamiento</th>
                     <th>IP</th>
@@ -249,7 +256,6 @@
                     <th>MAC</th>
                     <th>ID del Producto</th>
                     <th>Hostname</th>
-                    <th>S.O</th>
                     <th>Usuario SAP</th>
                     <th>Tipo de Licencia SAP</th>
                     <th>ClickView</th>
@@ -264,6 +270,7 @@
                     <th>IP Celular</th>
                     <th>MAC Celular</th>
                     <th>Otros</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -278,15 +285,28 @@
     <script>
         const form = document.getElementById('formEquipo');
         const tablaInventario = document.getElementById('tablaInventario').getElementsByTagName('tbody')[0];
+        let filaEditando = null;
 
         // Función para agregar un equipo
         function agregarEquipo() {
             const formValues = Array.from(new FormData(form).entries()).map(entry => entry[1]);
-            const fila = tablaInventario.insertRow();
-            formValues.forEach(value => {
-                const cell = fila.insertCell();
-                cell.textContent = value;
-            });
+
+            if (filaEditando) {
+                // Actualizar fila en modo edición
+                formValues.forEach((value, index) => {
+                    filaEditando.cells[index].textContent = value;
+                });
+                filaEditando = null;
+            } else {
+                // Agregar nueva fila
+                const fila = tablaInventario.insertRow();
+                formValues.forEach(value => {
+                    const cell = fila.insertCell();
+                    cell.textContent = value;
+                });
+                const accionesCell = fila.insertCell();
+                accionesCell.innerHTML = '<button class="edit-btn" onclick="editarEquipo(this)">Editar</button> <button class="delete-btn" onclick="eliminarEquipo(this)">Eliminar</button>';
+            }
             form.reset();
         }
 
@@ -298,6 +318,22 @@
                 const texto = fila.getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
                 fila.style.display = texto.includes(searchInput) ? '' : 'none';
             });
+        }
+
+        // Función para editar equipo
+        function editarEquipo(boton) {
+            filaEditando = boton.closest('tr');
+            const celdas = filaEditando.getElementsByTagName('td');
+            const formInputs = form.getElementsByTagName('input');
+            Array.from(formInputs).forEach((input, index) => {
+                input.value = celdas[index].textContent;
+            });
+        }
+
+        // Función para eliminar equipo
+        function eliminarEquipo(boton) {
+            const fila = boton.closest('tr');
+            tablaInventario.deleteRow(fila.rowIndex - 1);
         }
 
         // Función para generar PDF usando jsPDF
