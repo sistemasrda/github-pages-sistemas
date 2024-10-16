@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -108,7 +108,7 @@
 <body>
 
     <div class="background-video">
-        <iframe src="https://1drv.ms/v/c/37de960648d1d94f/UQRP2dFIBpbeIIA3BDAAAAAAAC5XqohKV92wFYc" width="1024" height="576" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        <iframe src="https://1drv.ms/v/c/37de960648d1d94f/IQRAitbgDeCnQo1BkGyp1gwyAZ438ZIRHQ2aChe5eHW7KwY" width="3840" height="2160" frameborder="0" scrolling="no" allowfullscreen autoplay loop></iframe>
     </div>
 
     <div class="content">
@@ -205,7 +205,7 @@
                 <input type="text" id="marcaCelular" name="marcaCelular" required>
             </div>
             <div>
-                <label for="modeloCelular">Modelo Celular:</label>
+                <label for="modeloCelular">Modelo de Celular:</label>
                 <input type="text" id="modeloCelular" name="modeloCelular" required>
             </div>
             <div>
@@ -278,66 +278,12 @@
 
         // Función para agregar un equipo
         function agregarEquipo() {
-            // Obtener valores del formulario
-            const usuario = form.usuario.value;
-            const numEmpleado = form.numEmpleado.value;
-            const puesto = form.puesto.value;
-            const area = form.area.value;
-            const tipoEquipo = form.tipoEquipo.value;
-            const modelo = form.modelo.value;
-            const marca = form.marca.value;
-            const numSerie = form.numSerie.value;
-            const ram = form.ram.value;
-            const almacenamiento = form.almacenamiento.value;
-            const ip = form.ip.value;
-            const ipWifi = form.ipWifi.value;
-            const mac = form.mac.value;
-            const idProducto = form.idProducto.value;
-            const hostname = form.hostname.value;
-            const kitTecladoMouse = form.kitTecladoMouse.value;
-            const monitor = form.monitor.value;
-            const baseLaptop = form.baseLaptop.value;
-            const modeloTelefono = form.modeloTelefono.value;
-            const macTelefono = form.macTelefono.value;
-            const extension = form.extension.value;
-            const marcaCelular = form.marcaCelular.value;
-            const modeloCelular = form.modeloCelular.value;
-            const ipCelular = form.ipCelular.value;
-            const macCelular = form.macCelular.value;
-            const otros = form.otros.value;
-
-            // Crear una nueva fila
+            const formValues = Array.from(new FormData(form).entries()).map(entry => entry[1]);
             const fila = tablaInventario.insertRow();
-
-            // Insertar celdas y asignar valores
-            fila.insertCell(0).innerText = usuario;
-            fila.insertCell(1).innerText = numEmpleado;
-            fila.insertCell(2).innerText = puesto;
-            fila.insertCell(3).innerText = area;
-            fila.insertCell(4).innerText = tipoEquipo;
-            fila.insertCell(5).innerText = modelo;
-            fila.insertCell(6).innerText = marca;
-            fila.insertCell(7).innerText = numSerie;
-            fila.insertCell(8).innerText = ram;
-            fila.insertCell(9).innerText = almacenamiento;
-            fila.insertCell(10).innerText = ip;
-            fila.insertCell(11).innerText = ipWifi;
-            fila.insertCell(12).innerText = mac;
-            fila.insertCell(13).innerText = idProducto;
-            fila.insertCell(14).innerText = hostname;
-            fila.insertCell(15).innerText = kitTecladoMouse;
-            fila.insertCell(16).innerText = monitor;
-            fila.insertCell(17).innerText = baseLaptop;
-            fila.insertCell(18).innerText = modeloTelefono;
-            fila.insertCell(19).innerText = macTelefono;
-            fila.insertCell(20).innerText = extension;
-            fila.insertCell(21).innerText = marcaCelular;
-            fila.insertCell(22).innerText = modeloCelular;
-            fila.insertCell(23).innerText = ipCelular;
-            fila.insertCell(24).innerText = macCelular;
-            fila.insertCell(25).innerText = otros;
-
-            // Limpiar el formulario
+            formValues.forEach(value => {
+                const cell = fila.insertCell();
+                cell.textContent = value;
+            });
             form.reset();
         }
 
@@ -345,45 +291,27 @@
         function buscar() {
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const filas = tablaInventario.getElementsByTagName('tr');
-
-            for (let i = 0; i < filas.length; i++) {
-                const celda = filas[i].getElementsByTagName('td')[0];
-                if (celda) {
-                    const textoCelda = celda.textContent || celda.innerText;
-                    if (textoCelda.toLowerCase().indexOf(searchInput) > -1) {
-                        filas[i].style.display = '';
-                    } else {
-                        filas[i].style.display = 'none';
-                    }
-                }
-            }
+            Array.from(filas).forEach(fila => {
+                const texto = fila.getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
+                fila.style.display = texto.includes(searchInput) ? '' : 'none';
+            });
         }
 
         // Función para generar PDF usando jsPDF
         function generarPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-
-            let y = 10;
-            doc.text("Inventario de Equipos", 10, y);
-            y += 10;
-
-            const filas = tablaInventario.getElementsByTagName('tr');
-            for (let i = 0; i < filas.length; i++) {
-                const celdas = filas[i].getElementsByTagName('td');
-                let filaTexto = "";
-                for (let j = 0; j < celdas.length; j++) {
-                    filaTexto += `${celdas[j].innerText} | `;
-                }
-                doc.text(filaTexto, 10, y);
+            doc.text("Inventario de Equipos", 10, 10);
+            let y = 20;
+            Array.from(tablaInventario.getElementsByTagName('tr')).forEach(fila => {
+                const filaText = Array.from(fila.getElementsByTagName('td')).map(cell => cell.textContent).join(' | ');
+                doc.text(filaText, 10, y);
                 y += 10;
                 if (y > 280) {
                     doc.addPage();
                     y = 10;
                 }
-            }
-
-            // Guardar el PDF
+            });
             doc.save('inventario_equipos.pdf');
         }
     </script>
