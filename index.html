@@ -246,4 +246,116 @@
                     <th>Kit Teclado y Mouse</th>
                     <th>Monitor</th>
                     <th>Base para Laptop</th>
-                    <
+                    <th>Modelo de Teléfono</th>
+                    <th>MAC Teléfono</th>
+                    <th>Extensión</th>
+                    <th>Marca Celular</th>
+                    <th>Modelo Celular</th>
+                    <th>IP Celular</th>
+                    <th>MAC Celular</th>
+                    <th>Otros</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filas dinámicamente agregadas aquí -->
+            </tbody>
+        </table>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <h2>Dashboard - Equipos por Empresa</h2>
+            <!-- Aquí puedes agregar información del dashboard separado por empresa -->
+            <p>Este espacio está reservado para mostrar el resumen de los equipos separados por empresa.</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('formEquipo');
+        const tablaInventario = document.getElementById('tablaInventario').getElementsByTagName('tbody')[0];
+
+        // Función para agregar un equipo
+        function agregarEquipo() {
+            // Obtener valores del formulario
+            const usuario = form.usuario.value;
+            const numEmpleado = form.numEmpleado.value;
+            const puesto = form.puesto.value;
+            const area = form.area.value;
+            const tipoEquipo = form.tipoEquipo.value;
+            const modelo = form.modelo.value;
+            const marca = form.marca.value;
+            const numSerie = form.numSerie.value;
+            const ram = form.ram.value;
+            const almacenamiento = form.almacenamiento.value;
+            const ip = form.ip.value;
+            const ipWifi = form.ipWifi.value;
+            const mac = form.mac.value;
+            const idProducto = form.idProducto.value;
+            const hostname = form.hostname.value;
+            const kitTecladoMouse = form.kitTecladoMouse.value;
+            const monitor = form.monitor.value;
+            const baseLaptop = form.baseLaptop.value;
+            const modeloTelefono = form.modeloTelefono.value;
+            const macTelefono = form.macTelefono.value;
+            const extension = form.extension.value;
+            const marcaCelular = form.marcaCelular.value;
+            const modeloCelular = form.modeloCelular.value;
+            const ipCelular = form.ipCelular.value;
+            const macCelular = form.macCelular.value;
+            const otros = form.otros.value;
+
+            // Crear una nueva fila
+            const fila = tablaInventario.insertRow();
+
+            // Insertar celdas y asignar valores
+            fila.insertCell(0).innerText = usuario;
+            fila.insertCell(1).innerText = numEmpleado;
+            fila.insertCell(2).innerText = puesto;
+            fila.insertCell(3).innerText = area;
+            fila.insertCell(4).innerText = tipoEquipo;
+            fila.insertCell(5).innerText = modelo;
+            fila.insertCell(6).innerText = marca;
+            fila.insertCell(7).innerText = numSerie;
+            fila.insertCell(8).innerText = ram;
+            fila.insertCell(9).innerText = almacenamiento;
+            fila.insertCell(10).innerText = ip;
+            fila.insertCell(11).innerText = ipWifi;
+            fila.insertCell(12).innerText = mac;
+            fila.insertCell(13).innerText = idProducto;
+            fila.insertCell(14).innerText = hostname;
+            fila.insertCell(15).innerText = kitTecladoMouse;
+            fila.insertCell(16).innerText = monitor;
+            fila.insertCell(17).innerText = baseLaptop;
+            fila.insertCell(18).innerText = modeloTelefono;
+            fila.insertCell(19).innerText = macTelefono;
+            fila.insertCell(20).innerText = extension;
+            fila.insertCell(21).innerText = marcaCelular;
+            fila.insertCell(22).innerText = modeloCelular;
+            fila.insertCell(23).innerText = ipCelular;
+            fila.insertCell(24).innerText = macCelular;
+            fila.insertCell(25).innerText = otros;
+
+            // Limpiar el formulario
+            form.reset();
+        }
+
+        // Función para buscar por nombre de usuario
+        function buscar() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filas = tablaInventario.getElementsByTagName('tr');
+
+            for (let i = 0; i < filas.length; i++) {
+                const celda = filas[i].getElementsByTagName('td')[0];
+                if (celda) {
+                    const textoCelda = celda.textContent || celda.innerText;
+                    if (textoCelda.toLowerCase().indexOf(searchInput) > -1) {
+                        filas[i].style.display = '';
+                    } else {
+                        filas[i].style.display = 'none';
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
