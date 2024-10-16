@@ -4,114 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Inventario</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #dashboard { margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
 </head>
 <body>
     <h1>Sistema de Inventario</h1>
-    
-    <form id="inventory-form">
-        <h2>Agregar Equipos</h2>
-        <input type="text" placeholder="Nombre de usuario" required>
-        <input type="text" placeholder="Número de empleado" required>
-        <input type="text" placeholder="Puesto" required>
-        <input type="text" placeholder="Área" required>
-        <input type="text" placeholder="Tipo de equipo" required>
-        <input type="text" placeholder="Modelo" required>
-        <input type="text" placeholder="Marca" required>
-        <input type="text" placeholder="Número de serie" required>
-        <input type="text" placeholder="RAM" required>
-        <input type="text" placeholder="Almacenamiento" required>
-        <input type="text" placeholder="IP Ethernet" required>
-        <input type="text" placeholder="IP WiFi" required>
-        <input type="text" placeholder="MAC" required>
-        <input type="text" placeholder="ID del producto" required>
-        <input type="text" placeholder="Hostname" required>
-        <input type="text" placeholder="Sistema Operativo" required>
-        <input type="text" placeholder="Antivirus" required>
-        <input type="text" placeholder="Usuario SAP" required>
-        <input type="text" placeholder="Licencia SAP" required>
-        <input type="text" placeholder="Qlikview" required>
-        <input type="text" placeholder="Kit teclado y mouse" required>
-        <input type="text" placeholder="Monitor" required>
-        <input type="text" placeholder="Base para laptop" required>
-        <input type="text" placeholder="Modelo de teléfono" required>
-        <input type="text" placeholder="MAC teléfono" required>
-        <input type="text" placeholder="Extensión" required>
-        <input type="text" placeholder="Marca de celular" required>
-        <input type="text" placeholder="Modelo celular" required>
-        <input type="text" placeholder="IP celular" required>
-        <input type="text" placeholder="MAC celular" required>
-        <textarea placeholder="Otros"></textarea>
-        <button type="submit">Guardar</button>
+    <form id="inventoryForm">
+        <h2>Agregar Equipo</h2>
+        Nombre de Usuario: <input type="text" id="username" required><br>
+        Número de Empleado: <input type="text" id="employeeNumber" required><br>
+        Puesto: <input type="text" id="position" required><br>
+        Área: <input type="text" id="area" required><br>
+        Tipo de Equipo: <input type="text" id="equipmentType" required><br>
+        Modelo: <input type="text" id="model" required><br>
+        Marca: <input type="text" id="brand" required><br>
+        Número de Serie: <input type="text" id="serialNumber" required><br>
+        RAM: <input type="text" id="ram"><br>
+        Almacenamiento: <input type="text" id="storage"><br>
+        IP: <input type="text" id="ip"><br>
+        IP Wifi: <input type="text" id="wifiIp"><br>
+        MAC: <input type="text" id="mac"><br>
+        ID del Producto: <input type="text" id="productId"><br>
+        Hostname: <input type="text" id="hostname"><br>
+        Usuario SAP: <input type="text" id="sapUser"><br>
+        Tipo de Licencia SAP: <input type="text" id="sapLicense"><br>
+        ClickView: <input type="text" id="clickView"><br>
+        Kit Teclado y Mouse: <input type="text" id="keyboardMouse"><br>
+        Monitor: <input type="text" id="monitor"><br>
+        Base para Laptop: <input type="text" id="laptopBase"><br>
+        Modelo de Teléfono: <input type="text" id="phoneModel"><br>
+        MAC Teléfono: <input type="text" id="phoneMac"><br>
+        Extensión: <input type="text" id="extension"><br>
+        Marca de Celular: <input type="text" id="cellBrand"><br>
+        Modelo de Celular: <input type="text" id="cellModel"><br>
+        IP Celular: <input type="text" id="cellIp"><br>
+        MAC Celular: <input type="text" id="cellMac"><br>
+        Otros: <input type="text" id="others"><br>
+        <button type="submit">Guardar Equipo</button>
     </form>
-    
-    <div>
-        <h2>Buscar Equipos</h2>
-        <input type="text" id="search" placeholder="Buscar por nombre, empresa o número de empleado">
-        <button id="search-btn">Buscar</button>
+    <br>
+    <h2>Búsqueda de Usuario</h2>
+    <input type="text" id="searchUser" placeholder="Nombre de usuario">
+    <button onclick="searchUser()">Buscar</button>
+    <div id="searchResults"></div>
+    <div id="dashboard">
+        <h2>Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Número de Empleado</th>
+                    <th>Área</th>
+                    <th>Tipo de Equipo</th>
+                </tr>
+            </thead>
+            <tbody id="dashboardBody"></tbody>
+        </table>
     </div>
-
-    <h2>Dashboard</h2>
-    <div id="dashboard"></div>
-
     <script src="script.js"></script>
 </body>
 </html>
-body {
-    font-family: Arial, sans-serif;
-}
-
-form, div {
-    margin-bottom: 20px;
-}
-
-input, textarea {
-    display: block;
-    margin: 10px 0;
-    padding: 8px;
-    width: 300px;
-}
-
-button {
-    padding: 10px 15px;
-}
-
-document.getElementById('inventory-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const formData = new FormData(event.target);
-    const inventoryItem = {};
-    
-    formData.forEach((value, key) => {
-        inventoryItem[key] = value;
-    });
-
-    let inventory = JSON.parse(localStorage.getItem('inventory')) || [];
-    inventory.push(inventoryItem);
-    localStorage.setItem('inventory', JSON.stringify(inventory));
-    
-    displayDashboard(inventory);
-    event.target.reset();
-});
-
-function displayDashboard(inventory) {
-    const dashboard = document.getElementById('dashboard');
-    dashboard.innerHTML = '';
-    
-    inventory.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.textContent = `${item['Nombre de usuario']} - ${item['Número de empleado']} - ${item['Tipo de equipo']}`;
-        dashboard.appendChild(itemDiv);
-    });
-}
-
-document.getElementById('search-btn').addEventListener('click', function() {
-    const searchValue = document.getElementById('search').value.toLowerCase();
-    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
-    const filteredInventory = inventory.filter(item => 
-        item['Nombre de usuario'].toLowerCase().includes(searchValue) ||
-        item['Número de empleado'].toLowerCase().includes(searchValue)
-    );
-    
-    displayDashboard(filteredInventory);
-});
