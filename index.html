@@ -3,201 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <title>Sistema de Inventario</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .form-container, .dashboard { margin: 20px; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table, .table th, .table td { border: 1px solid black; }
+        .table th, .table td { padding: 10px; text-align: left; }
+        .status-verde { background-color: green; color: white; }
+        .status-amarillo { background-color: yellow; }
+        .status-rojo { background-color: red; color: white; }
+    </style>
 </head>
 <body>
-    <h1>Sistema de Inventario</h1>
-    <form id="inventoryForm">
-        <input type="text" id="username" placeholder="Nombre de Usuario" required>
-        <input type="text" id="employeeNumber" placeholder="Número de Empleado" required>
-        <select id="company" required>
-            <option value="">Seleccione Empresa</option>
-            <option value="Empresa1">Empresa 1</option>
-            <option value="Empresa2">Empresa 2</option>
-        </select>
-        <input type="text" id="position" placeholder="Puesto" required>
-        <input type="text" id="area" placeholder="Área" required>
-        <input type="text" id="equipmentType" placeholder="Tipo de Equipo" required>
-        <input type="text" id="model" placeholder="Modelo" required>
-        <input type="text" id="brand" placeholder="Marca" required>
-        <input type="text" id="serialNumber" placeholder="Número de Serie" required>
-        <input type="text" id="ram" placeholder="RAM" required>
-        <input type="text" id="storage" placeholder="Almacenamiento" required>
-        <input type="text" id="ip" placeholder="IP" required>
-        <input type="text" id="wifiIp" placeholder="IP Wifi" required>
-        <input type="text" id="mac" placeholder="MAC" required>
-        <input type="text" id="productId" placeholder="ID del Producto" required>
-        <input type="text" id="hostname" placeholder="Hostname" required>
-        <input type="text" id="sapUser" placeholder="Usuario SAP" required>
-        <input type="text" id="sapLicenseType" placeholder="Tipo de Licencia SAP" required>
-        <input type="text" id="clickView" placeholder="ClickView" required>
-        <input type="text" id="keyboardMouse" placeholder="Kit Teclado y Mouse" required>
-        <input type="text" id="monitor" placeholder="Monitor" required>
-        <input type="text" id="laptopBase" placeholder="Base para Laptop" required>
-        <input type="text" id="phoneModel" placeholder="Modelo de Teléfono" required>
-        <input type="text" id="phoneMac" placeholder="MAC Teléfono" required>
-        <input type="text" id="extension" placeholder="Extensión" required>
-        <input type="text" id="cellBrand" placeholder="Marca de Celular" required>
-        <input type="text" id="cellModel" placeholder="Modelo de Celular" required>
-        <input type="text" id="cellIp" placeholder="IP Celular" required>
-        <input type="text" id="cellMac" placeholder="MAC Celular" required>
-        <input type="text" id="other" placeholder="Otros">
-        <button type="submit">Guardar</button>
-    </form>
 
-    <button id="showData">Datos</button>
-    <input type="text" id="searchUser" placeholder="Buscar Usuario">
-    <button id="searchBtn">Buscar</button>
-    <button id="generatePDF">Generar PDF</button>
+    <div class="form-container">
+        <h2>Agregar Equipo</h2>
+        <form id="inventoryForm">
+            <input type="text" placeholder="Nombre de Usuario" required>
+            <input type="text" placeholder="Número de Empleado" required>
+            <input type="text" placeholder="Empresa" required>
+            <input type="text" placeholder="Puesto" required>
+            <input type="text" placeholder="Área" required>
+            <input type="text" placeholder="Tipo de Equipo" required>
+            <input type="text" placeholder="Modelo" required>
+            <input type="text" placeholder="Marca" required>
+            <input type="text" placeholder="Número de Serie" required>
+            <input type="text" placeholder="RAM" required>
+            <input type="text" placeholder="Almacenamiento" required>
+            <input type="text" placeholder="IP" required>
+            <input type="text" placeholder="IP Wifi" required>
+            <input type="text" placeholder="MAC" required>
+            <input type="text" placeholder="ID del Producto" required>
+            <input type="text" placeholder="Hostname" required>
+            <input type="text" placeholder="Usuario SAP" required>
+            <input type="text" placeholder="Tipo de Licencia SAP" required>
+            <input type="text" placeholder="ClickView" required>
+            <input type="text" placeholder="Kit Teclado y Mouse" required>
+            <input type="text" placeholder="Monitor" required>
+            <input type="text" placeholder="Base para Laptop" required>
+            <input type="text" placeholder="Modelo de Teléfono" required>
+            <input type="text" placeholder="MAC Teléfono" required>
+            <input type="text" placeholder="Extensión" required>
+            <input type="text" placeholder="Marca de Celular" required>
+            <input type="text" placeholder="Modelo de Celular" required>
+            <input type="text" placeholder="IP Celular" required>
+            <input type="text" placeholder="MAC Celular" required>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
 
-    <div id="dashboard"></div>
+    <button onclick="toggleDashboard()">Datos</button>
+    
+    <div class="dashboard" id="dashboard" style="display:none;">
+        <h2>Dashboard</h2>
+        <input type="text" id="searchInput" placeholder="Buscar por Nombre de Usuario" onkeyup="searchUser()">
+        <table class="table" id="dataTable">
+            <thead>
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Número de Empleado</th>
+                    <th>Empresa</th>
+                    <th>Puesto</th>
+                    <th>Área</th>
+                    <th>Tipo de Equipo</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="dataBody"></tbody>
+        </table>
+        <button onclick="generatePDF()">Generar PDF</button>
+    </div>
 
-    <script src="script.js"></script>
+    <script>
+        const data = [];
+
+        document.getElementById('inventoryForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formElements = event.target.elements;
+            const equipment = {
+                username: formElements[0].value,
+                employeeNumber: formElements[1].value,
+                company: formElements[2].value,
+                position: formElements[3].value,
+                area: formElements[4].value,
+                equipmentType: formElements[5].value,
+                model: formElements[6].value,
+                brand: formElements[7].value,
+                serialNumber: formElements[8].value,
+                ram: formElements[9].value,
+                storage: formElements[10].value,
+                ip: formElements[11].value,
+                wifiIp: formElements[12].value,
+                mac: formElements[13].value,
+                productId: formElements[14].value,
+                hostname: formElements[15].value,
+                sapUser: formElements[16].value,
+                sapLicense: formElements[17].value,
+                clickView: formElements[18].value,
+                keyboardMouseKit: formElements[19].value,
+                monitor: formElements[20].value,
+                laptopBase: formElements[21].value,
+                phoneModel: formElements[22].value,
+                phoneMac: formElements[23].value,
+                extension: formElements[24].value,
+                cellBrand: formElements[25].value,
+                cellModel: formElements[26].value,
+                cellIp: formElements[27].value,
+                cellMac: formElements[28].value,
+                status: 'normal' // Default status, can be changed based on your logic
+            };
+            data.push(equipment);
+            displayData();
+            event.target.reset();
+        });
+
+        function displayData() {
+            const dataBody = document.getElementById('dataBody');
+            dataBody.innerHTML = '';
+            data.forEach((equipment, index) => {
+                const row = document.createElement('tr');
+                row.className = getStatusClass(equipment.status);
+                row.innerHTML = `
+                    <td>${equipment.username}</td>
+                    <td>${equipment.employeeNumber}</td>
+                    <td>${equipment.company}</td>
+                    <td>${equipment.position}</td>
+                    <td>${equipment.area}</td>
+                    <td>${equipment.equipmentType}</td>
+                    <td>${equipment.status}</td>
+                    <td>
+                        <button onclick="editEquipment(${index})">Editar</button>
+                        <button onclick="deleteEquipment(${index})">Eliminar</button>
+                    </td>
+                `;
+                dataBody.appendChild(row);
+            });
+        }
+
+        function getStatusClass(status) {
+            switch (status) {
+                case 'reasignado':
+                    return 'status-verde';
+                case 'normal':
+                    return 'status-amarillo';
+                case 'baja':
+                    return 'status-rojo';
+                default:
+                    return '';
+            }
+        }
+
+        function toggleDashboard() {
+            const dashboard = document.getElementById('dashboard');
+            dashboard.style.display = dashboard.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function searchUser() {
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const filteredData = data.filter(equipment => equipment.username.toLowerCase().includes(searchValue));
+            const dataBody = document.getElementById('dataBody');
+            dataBody.innerHTML = '';
+            filteredData.forEach((equipment, index) => {
+                const row = document.createElement('tr');
+                row.className = getStatusClass(equipment.status);
+                row.innerHTML = `
+                    <td>${equipment.username}</td>
+                    <td>${equipment.employeeNumber}</td>
+                    <td>${equipment.company}</td>
+                    <td>${equipment.position}</td>
+                    <td>${equipment.area}</td>
+                    <td>${equipment.equipmentType}</td>
+                    <td>${equipment.status}</td>
+                    <td>
+                        <button onclick="editEquipment(${index})">Editar</button>
+                        <button onclick="deleteEquipment(${index})">Eliminar</button>
+                    </td>
+                `;
+                dataBody.appendChild(row);
+            });
+        }
+
+        function editEquipment(index) {
+            // Implement your edit logic here
+            alert('Edit function not implemented yet.');
+        }
+
+        function deleteEquipment(index) {
+            data.splice(index, 1);
+            displayData();
+        }
+
+        function generatePDF() {
+            alert('Generar PDF no implementado aún.');
+            // You can use a library like jsPDF to implement this functionality
+        }
+    </script>
 </body>
 </html>
-const inventory = [];
-
-// Guardar equipo
-document.getElementById('inventoryForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const equipment = {
-        username: document.getElementById('username').value,
-        employeeNumber: document.getElementById('employeeNumber').value,
-        company: document.getElementById('company').value,
-        position: document.getElementById('position').value,
-        area: document.getElementById('area').value,
-        equipmentType: document.getElementById('equipmentType').value,
-        model: document.getElementById('model').value,
-        brand: document.getElementById('brand').value,
-        serialNumber: document.getElementById('serialNumber').value,
-        ram: document.getElementById('ram').value,
-        storage: document.getElementById('storage').value,
-        ip: document.getElementById('ip').value,
-        wifiIp: document.getElementById('wifiIp').value,
-        mac: document.getElementById('mac').value,
-        productId: document.getElementById('productId').value,
-        hostname: document.getElementById('hostname').value,
-        sapUser: document.getElementById('sapUser').value,
-        sapLicenseType: document.getElementById('sapLicenseType').value,
-        clickView: document.getElementById('clickView').value,
-        keyboardMouse: document.getElementById('keyboardMouse').value,
-        monitor: document.getElementById('monitor').value,
-        laptopBase: document.getElementById('laptopBase').value,
-        phoneModel: document.getElementById('phoneModel').value,
-        phoneMac: document.getElementById('phoneMac').value,
-        extension: document.getElementById('extension').value,
-        cellBrand: document.getElementById('cellBrand').value,
-        cellModel: document.getElementById('cellModel').value,
-        cellIp: document.getElementById('cellIp').value,
-        cellMac: document.getElementById('cellMac').value,
-        other: document.getElementById('other').value,
-        status: 'normal' // Inicialmente se establece como 'normal'
-    };
-
-    inventory.push(equipment);
-    document.getElementById('inventoryForm').reset();
-    alert('Equipo guardado con éxito!');
-});
-
-// Mostrar datos en el dashboard
-document.getElementById('showData').addEventListener('click', function() {
-    const dashboard = document.getElementById('dashboard');
-    dashboard.innerHTML = '';
-
-    const groupedByCompany = inventory.reduce((acc, item) => {
-        acc[item.company] = acc[item.company] || [];
-        acc[item.company].push(item);
-        return acc;
-    }, {});
-
-    for (const [company, items] of Object.entries(groupedByCompany)) {
-        const companyDiv = document.createElement('div');
-        companyDiv.innerHTML = `<h2>${company}</h2>`;
-        
-        items.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.innerHTML = `
-                <p>${item.username} - ${item.equipmentType}</p>
-                <button onclick="editItem('${item.username}')">Editar</button>
-                <button onclick="deleteItem('${item.username}')">Eliminar</button>
-                <span style="color: ${item.status === 'reasignado' ? 'green' : item.status === 'normal' ? 'yellow' : 'red'};">
-                    Estado: ${item.status}
-                </span>
-            `;
-            companyDiv.appendChild(itemDiv);
-        });
-        dashboard.appendChild(companyDiv);
-    }
-});
-
-// Buscar usuario
-document.getElementById('searchBtn').addEventListener('click', function() {
-    const searchQuery = document.getElementById('searchUser').value.toLowerCase();
-    const results = inventory.filter(item => item.username.toLowerCase().includes(searchQuery));
-    
-    const dashboard = document.getElementById('dashboard');
-    dashboard.innerHTML = '';
-    
-    results.forEach(item => {
-        const itemDiv = document.createElement('div');
-        itemDiv.innerHTML = `<p>${item.username} - ${item.equipmentType}</p>`;
-        dashboard.appendChild(itemDiv);
-    });
-});
-
-// Generar PDF
-document.getElementById('generatePDF').addEventListener('click', function() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.text("Datos de Inventario", 10, 10);
-    let y = 20;
-
-    inventory.forEach(item => {
-        doc.text(`Usuario: ${item.username}, Equipo: ${item.equipmentType}`, 10, y);
-        y += 10;
-    });
-
-    doc.save('inventario.pdf');
-});
-
-// Editar equipo
-function editItem(username) {
-    const item = inventory.find(i => i.username === username);
-    // Implementa la lógica para editar el item
-    alert(`Editando ${username}`);
-}
-
-// Eliminar equipo
-function deleteItem(username) {
-    const index = inventory.findIndex(i => i.username === username);
-    if (index > -1) {
-        inventory.splice(index, 1);
-        alert(`Equipo ${username} eliminado.`);
-    }
-}
-body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-}
-
-h1 {
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-input, select, button {
-    margin: 5px 0;
-    padding: 10px;
-    width: 200px;
-}
-
-#dashboard {
-    margin-top: 20px;
-}
