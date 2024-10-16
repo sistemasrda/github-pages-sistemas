@@ -16,7 +16,7 @@
         }
         form {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-bottom: 30px;
         }
@@ -26,6 +26,8 @@
         input, select {
             padding: 8px;
             width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
         button {
             padding: 10px;
@@ -33,6 +35,10 @@
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background-color: #218838;
         }
         table {
             width: 100%;
@@ -44,174 +50,183 @@
             padding: 8px;
         }
         th {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #f2f2f2;
         }
-        .search-box {
+        #searchSection {
             margin-bottom: 20px;
         }
-        .search-box input {
-            padding: 10px;
-            width: 300px;
+        #pdfButton {
+            background-color: #007bff;
+        }
+        #pdfButton:hover {
+            background-color: #0069d9;
         }
     </style>
 </head>
 <body>
 
-<h1>Inventario de Equipos</h1>
+<h1>Sistema de Inventario TI</h1>
 
-<!-- Formulario para agregar equipos -->
+<div id="searchSection">
+    <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario" oninput="buscar()">
+</div>
+
 <form id="formEquipo">
-    <label for="usuario">Nombre de Usuario:</label>
-    <input type="text" id="usuario" name="usuario" required>
+    <label for="nombreUsuario">Nombre de Usuario:</label>
+    <input type="text" id="nombreUsuario" required>
 
-    <label for="numEmpleado">Número de Empleado:</label>
-    <input type="text" id="numEmpleado" name="numEmpleado" required>
+    <label for="numeroEmpleado">Número de Empleado:</label>
+    <input type="text" id="numeroEmpleado" required>
 
     <label for="empresa">Empresa:</label>
-    <select id="empresa" name="empresa" required>
-        <option value="Representaciones de Audio">Representaciones de Audio</option>
+    <select id="empresa" required>
+        <option value="Representaciones de audio">Representaciones de audio</option>
         <option value="Equipos y Cintas">Equipos y Cintas</option>
-        <option value="La Ampere">La Ampere</option>
+        <option value="Ampere">Ampere</option>
     </select>
 
     <label for="puesto">Puesto:</label>
-    <input type="text" id="puesto" name="puesto" required>
+    <input type="text" id="puesto" required>
 
     <label for="area">Área:</label>
-    <input type="text" id="area" name="area" required>
+    <input type="text" id="area" required>
 
     <label for="tipoEquipo">Tipo de Equipo:</label>
-    <input type="text" id="tipoEquipo" name="tipoEquipo" required>
+    <input type="text" id="tipoEquipo" required>
 
     <label for="modelo">Modelo:</label>
-    <input type="text" id="modelo" name="modelo" required>
-
-    <label for="so">Sistema Operativo:</label>
-    <input type="text" id="so" name="so" required>
+    <input type="text" id="modelo" required>
 
     <label for="marca">Marca:</label>
-    <input type="text" id="marca" name="marca" required>
+    <input type="text" id="marca" required>
 
-    <label for="numSerie">Número de Serie:</label>
-    <input type="text" id="numSerie" name="numSerie" required>
+    <label for="numeroSerie">Número de Serie:</label>
+    <input type="text" id="numeroSerie" required>
 
     <label for="ram">RAM:</label>
-    <input type="text" id="ram" name="ram" required>
+    <input type="text" id="ram" required>
 
     <label for="almacenamiento">Almacenamiento:</label>
-    <input type="text" id="almacenamiento" name="almacenamiento" required>
+    <input type="text" id="almacenamiento" required>
 
     <label for="ip">IP:</label>
-    <input type="text" id="ip" name="ip" required>
+    <input type="text" id="ip" required>
 
-    <label for="ipWifi">IP WiFi:</label>
-    <input type="text" id="ipWifi" name="ipWifi" required>
+    <label for="ipWifi">IP Wifi:</label>
+    <input type="text" id="ipWifi" required>
 
     <label for="mac">MAC:</label>
-    <input type="text" id="mac" name="mac" required>
+    <input type="text" id="mac" required>
 
     <label for="idProducto">ID del Producto:</label>
-    <input type="text" id="idProducto" name="idProducto" required>
+    <input type="text" id="idProducto" required>
 
     <label for="hostname">Hostname:</label>
-    <input type="text" id="hostname" name="hostname" required>
+    <input type="text" id="hostname" required>
 
     <label for="usuarioSAP">Usuario SAP:</label>
-    <input type="text" id="usuarioSAP" name="usuarioSAP" required>
+    <input type="text" id="usuarioSAP" required>
 
     <label for="tipoLicenciaSAP">Tipo de Licencia SAP:</label>
-    <input type="text" id="tipoLicenciaSAP" name="tipoLicenciaSAP" required>
+    <input type="text" id="tipoLicenciaSAP" required>
 
     <label for="clickView">ClickView:</label>
-    <input type="text" id="clickView" name="clickView" required>
+    <input type="text" id="clickView" required>
 
     <label for="kitTecladoMouse">Kit Teclado y Mouse:</label>
-    <input type="text" id="kitTecladoMouse" name="kitTecladoMouse" required>
+    <input type="text" id="kitTecladoMouse" required>
 
     <label for="monitor">Monitor:</label>
-    <input type="text" id="monitor" name="monitor" required>
+    <input type="text" id="monitor" required>
 
     <label for="baseLaptop">Base para Laptop:</label>
-    <input type="text" id="baseLaptop" name="baseLaptop" required>
+    <input type="text" id="baseLaptop" required>
 
     <label for="modeloTelefono">Modelo de Teléfono:</label>
-    <input type="text" id="modeloTelefono" name="modeloTelefono" required>
+    <input type="text" id="modeloTelefono" required>
 
     <label for="macTelefono">MAC Teléfono:</label>
-    <input type="text" id="macTelefono" name="macTelefono" required>
+    <input type="text" id="macTelefono" required>
 
     <label for="extension">Extensión:</label>
-    <input type="text" id="extension" name="extension" required>
+    <input type="text" id="extension" required>
 
     <label for="marcaCelular">Marca de Celular:</label>
-    <input type="text" id="marcaCelular" name="marcaCelular" required>
+    <input type="text" id="marcaCelular" required>
 
     <label for="modeloCelular">Modelo de Celular:</label>
-    <input type="text" id="modeloCelular" name="modeloCelular" required>
+    <input type="text" id="modeloCelular" required>
 
     <label for="ipCelular">IP Celular:</label>
-    <input type="text" id="ipCelular" name="ipCelular" required>
+    <input type="text" id="ipCelular" required>
 
     <label for="macCelular">MAC Celular:</label>
-    <input type="text" id="macCelular" name="macCelular" required>
+    <input type="text" id="macCelular" required>
 
     <label for="otros">Otros:</label>
-    <input type="text" id="otros" name="otros" required>
+    <input type="text" id="otros">
 
-    <button type="button" onclick="agregarEquipo()">Guardar</button>
+    <button type="button" onclick="guardarEquipo()">Guardar</button>
+    <button type="button" id="pdfButton" onclick="generarPDF()">Generar PDF</button>
 </form>
 
-<!-- Búsqueda por nombre de usuario -->
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario">
-    <button onclick="buscar()">Buscar</button>
+<div>
+    <h2>Dashboard</h2>
+    <table id="tablaEquipos">
+        <thead>
+            <tr>
+                <th>Nombre de Usuario</th>
+                <th>Número de Empleado</th>
+                <th>Empresa</th>
+                <th>Puesto</th>
+                <th>Área</th>
+                <th>Tipo de Equipo</th>
+                <th>Modelo</th>
+                <th>Marca</th>
+                <th>Número de Serie</th>
+                <th>RAM</th>
+                <th>Almacenamiento</th>
+                <th>IP</th>
+                <th>IP Wifi</th>
+                <th>MAC</th>
+                <th>ID del Producto</th>
+                <th>Hostname</th>
+                <th>Usuario SAP</th>
+                <th>Tipo de Licencia SAP</th>
+                <th>ClickView</th>
+                <th>Kit Teclado y Mouse</th>
+                <th>Monitor</th>
+                <th>Base para Laptop</th>
+                <th>Modelo de Teléfono</th>
+                <th>MAC Teléfono</th>
+                <th>Extensión</th>
+                <th>Marca de Celular</th>
+                <th>Modelo de Celular</th>
+                <th>IP Celular</th>
+                <th>MAC Celular</th>
+                <th>Otros</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se llenarán los datos -->
+        </tbody>
+    </table>
 </div>
-
-<!-- Tabla para mostrar equipos -->
-<table id="tablaEquipos">
-    <thead>
-        <tr>
-            <th>Nombre de Usuario</th>
-            <th>Número de Empleado</th>
-            <th>Empresa</th>
-            <th>Puesto</th>
-            <th>Área</th>
-            <th>Tipo de Equipo</th>
-            <th>Modelo</th>
-            <th>Sistema Operativo</th>
-            <th>Marca</th>
-            <th>Número de Serie</th>
-            <th>RAM</th>
-            <th>Almacenamiento</th>
-            <th>IP</th>
-            <th>IP WiFi</th>
-            <th>MAC</th>
-            <th>ID del Producto</th>
-            <th>Hostname</th>
-            <!-- Continúa con el resto de los campos... -->
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Los equipos agregados aparecerán aquí -->
-    </tbody>
-</table>
 
 <script>
     const equipos = [];
 
-    function agregarEquipo() {
+    function guardarEquipo() {
         const equipo = {
-            usuario: document.getElementById('usuario').value,
-            numEmpleado: document.getElementById('numEmpleado').value,
+            nombreUsuario: document.getElementById('nombreUsuario').value,
+            numeroEmpleado: document.getElementById('numeroEmpleado').value,
             empresa: document.getElementById('empresa').value,
             puesto: document.getElementById('puesto').value,
             area: document.getElementById('area').value,
             tipoEquipo: document.getElementById('tipoEquipo').value,
             modelo: document.getElementById('modelo').value,
-            so: document.getElementById('so').value,
             marca: document.getElementById('marca').value,
-            numSerie: document.getElementById('numSerie').value,
+            numeroSerie: document.getElementById('numeroSerie').value,
             ram: document.getElementById('ram').value,
             almacenamiento: document.getElementById('almacenamiento').value,
             ip: document.getElementById('ip').value,
@@ -232,53 +247,67 @@
             modeloCelular: document.getElementById('modeloCelular').value,
             ipCelular: document.getElementById('ipCelular').value,
             macCelular: document.getElementById('macCelular').value,
-            otros: document.getElementById('otros').value
+            otros: document.getElementById('otros').value,
         };
 
         equipos.push(equipo);
         mostrarEquipos();
-        limpiarFormulario();
-    }
-
-    function mostrarEquipos() {
-        const tbody = document.getElementById('tablaEquipos').querySelector('tbody');
-        tbody.innerHTML = '';
-
-        equipos.forEach(equipo => {
-            const fila = document.createElement('tr');
-
-            Object.values(equipo).forEach(valor => {
-                const celda = document.createElement('td');
-                celda.textContent = valor;
-                fila.appendChild(celda);
-            });
-
-            tbody.appendChild(fila);
-        });
-    }
-
-    function limpiarFormulario() {
         document.getElementById('formEquipo').reset();
     }
 
-    function buscar() {
-        const input = document.getElementById('searchInput').value.toLowerCase();
-        const resultados = equipos.filter(equipo => equipo.usuario.toLowerCase().includes(input));
+    function mostrarEquipos() {
+        const tablaEquipos = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
+        tablaEquipos.innerHTML = ''; // Limpiar tabla
 
-        const tbody = document.getElementById('tablaEquipos').querySelector('tbody');
-        tbody.innerHTML = '';
-
-        resultados.forEach(equipo => {
-            const fila = document.createElement('tr');
-
-            Object.values(equipo).forEach(valor => {
-                const celda = document.createElement('td');
-                celda.textContent = valor;
-                fila.appendChild(celda);
-            });
-
-            tbody.appendChild(fila);
+        equipos.forEach(equipo => {
+            const fila = tablaEquipos.insertRow();
+            for (const prop in equipo) {
+                const celda = fila.insertCell();
+                celda.textContent = equipo[prop];
+            }
         });
+    }
+
+    function buscar() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const tablaEquipos = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
+        const filas = tablaEquipos.getElementsByTagName('tr');
+
+        for (let i = 0; i < filas.length; i++) {
+            const celdaNombreUsuario = filas[i].cells[0].textContent.toLowerCase();
+            filas[i].style.display = celdaNombreUsuario.includes(query) ? '' : 'none';
+        }
+    }
+
+    function generarPDF() {
+        let contenido = '<h1>Inventario de Equipos</h1><table><thead><tr>';
+        contenido += '<th>Nombre de Usuario</th><th>Número de Empleado</th><th>Empresa</th><th>Puesto</th><th>Área</th>';
+        contenido += '<th>Tipo de Equipo</th><th>Modelo</th><th>Marca</th><th>Número de Serie</th><th>RAM</th>';
+        contenido += '<th>Almacenamiento</th><th>IP</th><th>IP Wifi</th><th>MAC</th>';
+        contenido += '<th>ID del Producto</th><th>Hostname</th><th>Usuario SAP</th><th>Tipo de Licencia SAP</th>';
+        contenido += '<th>ClickView</th><th>Kit Teclado y Mouse</th><th>Monitor</th><th>Base para Laptop</th>';
+        contenido += '<th>Modelo de Teléfono</th><th>MAC Teléfono</th><th>Extensión</th>';
+        contenido += '<th>Marca de Celular</th><th>Modelo de Celular</th><th>IP Celular</th><th>MAC Celular</th>';
+        contenido += '<th>Otros</th></tr></thead><tbody>';
+
+        equipos.forEach(equipo => {
+            contenido += '<tr>';
+            for (const prop in equipo) {
+                contenido += `<td>${equipo[prop]}</td>`;
+            }
+            contenido += '</tr>';
+        });
+
+        contenido += '</tbody></table>';
+
+        const ventana = window.open('', '', 'width=800,height=600');
+        ventana.document.write('<html><head><title>Inventario PDF</title>');
+        ventana.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid #ddd; padding: 8px; }</style>');
+        ventana.document.write('</head><body>');
+        ventana.document.write(contenido);
+        ventana.document.write('</body></html>');
+        ventana.document.close();
+        ventana.print();
     }
 </script>
 
