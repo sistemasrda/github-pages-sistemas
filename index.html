@@ -3,352 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <title>Sistema de Inventario</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px 0;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        .reasignado {
-            background-color: lightgreen;
-        }
-        .baja {
-            background-color: lightcoral;
-        }
-        #searchInput {
-            padding: 10px;
-            width: 90%;
-        }
-    </style>
 </head>
 <body>
-
-<div class="container">
     <h1>Sistema de Inventario</h1>
-
-    <form id="formEquipo">
-        <input type="text" id="nombreUsuario" placeholder="Nombre de Usuario" required>
-        <input type="text" id="numeroEmpleado" placeholder="Número de Empleado" required>
-        <select id="empresa" required>
-            <option value="">Selecciona Empresa</option>
-            <option value="Representaciones de audio">Representaciones de audio</option>
-            <option value="Equipos">Equipos</option>
-            <option value="Cintas">Cintas</option>
-            <option value="Ampere">Ampere</option>
+    <form id="inventoryForm">
+        <input type="text" id="username" placeholder="Nombre de Usuario" required>
+        <input type="text" id="employeeNumber" placeholder="Número de Empleado" required>
+        <select id="company" required>
+            <option value="">Seleccione Empresa</option>
+            <option value="Empresa1">Empresa 1</option>
+            <option value="Empresa2">Empresa 2</option>
         </select>
-        <input type="text" id="puesto" placeholder="Puesto" required>
+        <input type="text" id="position" placeholder="Puesto" required>
         <input type="text" id="area" placeholder="Área" required>
-        <input type="text" id="tipoEquipo" placeholder="Tipo de Equipo" required>
-        <input type="text" id="modelo" placeholder="Modelo" required>
-        <input type="text" id="marca" placeholder="Marca" required>
-        <input type="text" id="numeroSerie" placeholder="Número de Serie" required>
+        <input type="text" id="equipmentType" placeholder="Tipo de Equipo" required>
+        <input type="text" id="model" placeholder="Modelo" required>
+        <input type="text" id="brand" placeholder="Marca" required>
+        <input type="text" id="serialNumber" placeholder="Número de Serie" required>
         <input type="text" id="ram" placeholder="RAM" required>
-        <input type="text" id="almacenamiento" placeholder="Almacenamiento" required>
+        <input type="text" id="storage" placeholder="Almacenamiento" required>
         <input type="text" id="ip" placeholder="IP" required>
-        <input type="text" id="ipWifi" placeholder="IP Wifi" required>
+        <input type="text" id="wifiIp" placeholder="IP Wifi" required>
         <input type="text" id="mac" placeholder="MAC" required>
-        <input type="text" id="idProducto" placeholder="ID del Producto" required>
+        <input type="text" id="productId" placeholder="ID del Producto" required>
         <input type="text" id="hostname" placeholder="Hostname" required>
-        <input type="text" id="usuarioSAP" placeholder="Usuario SAP" required>
-        <input type="text" id="tipoLicenciaSAP" placeholder="Tipo de Licencia SAP" required>
+        <input type="text" id="sapUser" placeholder="Usuario SAP" required>
+        <input type="text" id="sapLicenseType" placeholder="Tipo de Licencia SAP" required>
         <input type="text" id="clickView" placeholder="ClickView" required>
-        <input type="text" id="kitTecladoMouse" placeholder="Kit Teclado y Mouse" required>
+        <input type="text" id="keyboardMouse" placeholder="Kit Teclado y Mouse" required>
         <input type="text" id="monitor" placeholder="Monitor" required>
-        <input type="text" id="baseLaptop" placeholder="Base para Laptop" required>
-        <input type="text" id="modeloTelefono" placeholder="Modelo de Teléfono" required>
-        <input type="text" id="macTelefono" placeholder="MAC Teléfono" required>
+        <input type="text" id="laptopBase" placeholder="Base para Laptop" required>
+        <input type="text" id="phoneModel" placeholder="Modelo de Teléfono" required>
+        <input type="text" id="phoneMac" placeholder="MAC Teléfono" required>
         <input type="text" id="extension" placeholder="Extensión" required>
-        <input type="text" id="marcaCelular" placeholder="Marca de Celular" required>
-        <input type="text" id="modeloCelular" placeholder="Modelo de Celular" required>
-        <input type="text" id="ipCelular" placeholder="IP Celular" required>
-        <input type="text" id="macCelular" placeholder="MAC Celular" required>
-        <input type="text" id="otros" placeholder="Otros">
-        <select id="estado" required>
-            <option value="reasignado">Reasignado</option>
-            <option value="baja">Dado de Baja</option>
-        </select>
-        <button type="button" class="button" onclick="guardarDatos()">Guardar</button>
+        <input type="text" id="cellBrand" placeholder="Marca de Celular" required>
+        <input type="text" id="cellModel" placeholder="Modelo de Celular" required>
+        <input type="text" id="cellIp" placeholder="IP Celular" required>
+        <input type="text" id="cellMac" placeholder="MAC Celular" required>
+        <input type="text" id="other" placeholder="Otros">
+        <button type="submit">Guardar</button>
     </form>
 
-    <h2>Buscar por Nombre de Usuario</h2>
-    <input type="text" id="searchInput" onkeyup="buscar()" placeholder="Buscar...">
-    
-    <button class="button" onclick="mostrarDatos()">Mostrar Datos</button>
-    <button class="button" onclick="generarPDF()">Generar PDF</button>
+    <button id="showData">Datos</button>
+    <input type="text" id="searchUser" placeholder="Buscar Usuario">
+    <button id="searchBtn">Buscar</button>
+    <button id="generatePDF">Generar PDF</button>
 
-    <table id="tablaEquipos">
-        <thead>
-            <tr>
-                <th>Nombre de Usuario</th>
-                <th>Número de Empleado</th>
-                <th>Empresa</th>
-                <th>Puesto</th>
-                <th>Área</th>
-                <th>Tipo de Equipo</th>
-                <th>Modelo</th>
-                <th>Marca</th>
-                <th>Número de Serie</th>
-                <th>RAM</th>
-                <th>Almacenamiento</th>
-                <th>IP</th>
-                <th>IP Wifi</th>
-                <th>MAC</th>
-                <th>ID del Producto</th>
-                <th>Hostname</th>
-                <th>Usuario SAP</th>
-                <th>Tipo de Licencia SAP</th>
-                <th>ClickView</th>
-                <th>Kit Teclado y Mouse</th>
-                <th>Monitor</th>
-                <th>Base para Laptop</th>
-                <th>Modelo de Teléfono</th>
-                <th>MAC Teléfono</th>
-                <th>Extensión</th>
-                <th>Marca de Celular</th>
-                <th>Modelo de Celular</th>
-                <th>IP Celular</th>
-                <th>MAC Celular</th>
-                <th>Otros</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
+    <div id="dashboard"></div>
 
-<script>
-    let equipos = [];
-    let editIndex = -1;
-
-    function guardarDatos() {
-        const equipo = {
-            nombreUsuario: document.getElementById('nombreUsuario').value,
-            numeroEmpleado: document.getElementById('numeroEmpleado').value,
-            empresa: document.getElementById('empresa').value,
-            puesto: document.getElementById('puesto').value,
-            area: document.getElementById('area').value,
-            tipoEquipo: document.getElementById('tipoEquipo').value,
-            modelo: document.getElementById('modelo').value,
-            marca: document.getElementById('marca').value,
-            numeroSerie: document.getElementById('numeroSerie').value,
-            ram: document.getElementById('ram').value,
-            almacenamiento: document.getElementById('almacenamiento').value,
-            ip: document.getElementById('ip').value,
-            ipWifi: document.getElementById('ipWifi').value,
-            mac: document.getElementById('mac').value,
-            idProducto: document.getElementById('idProducto').value,
-            hostname: document.getElementById('hostname').value,
-            usuarioSAP: document.getElementById('usuarioSAP').value,
-            tipoLicenciaSAP: document.getElementById('tipoLicenciaSAP').value,
-            clickView: document.getElementById('clickView').value,
-            kitTecladoMouse: document.getElementById('kitTecladoMouse').value,
-            monitor: document.getElementById('monitor').value,
-            baseLaptop: document.getElementById('baseLaptop').value,
-            modeloTelefono: document.getElementById('modeloTelefono').value,
-            macTelefono: document.getElementById('macTelefono').value,
-            extension: document.getElementById('extension').value,
-            marcaCelular: document.getElementById('marcaCelular').value,
-            modeloCelular: document.getElementById('modeloCelular').value,
-            ipCelular: document.getElementById('ipCelular').value,
-            macCelular: document.getElementById('macCelular').value,
-            otros: document.getElementById('otros').value,
-            estado: document.getElementById('estado').value
-        };
-
-        if (editIndex >= 0) {
-            equipos[editIndex] = equipo;
-            editIndex = -1;
-        } else {
-            equipos.push(equipo);
-        }
-
-        document.getElementById('formEquipo').reset();
-        mostrarDatos();
-    }
-
-    function mostrarDatos() {
-        const tbody = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
-        equipos.forEach((equipo, index) => {
-            const row = tbody.insertRow();
-            row.innerHTML = `
-                <td>${equipo.nombreUsuario}</td>
-                <td>${equipo.numeroEmpleado}</td>
-                <td>${equipo.empresa}</td>
-                <td>${equipo.puesto}</td>
-                <td>${equipo.area}</td>
-                <td>${equipo.tipoEquipo}</td>
-                <td>${equipo.modelo}</td>
-                <td>${equipo.marca}</td>
-                <td>${equipo.numeroSerie}</td>
-                <td>${equipo.ram}</td>
-                <td>${equipo.almacenamiento}</td>
-                <td>${equipo.ip}</td>
-                <td>${equipo.ipWifi}</td>
-                <td>${equipo.mac}</td>
-                <td>${equipo.idProducto}</td>
-                <td>${equipo.hostname}</td>
-                <td>${equipo.usuarioSAP}</td>
-                <td>${equipo.tipoLicenciaSAP}</td>
-                <td>${equipo.clickView}</td>
-                <td>${equipo.kitTecladoMouse}</td>
-                <td>${equipo.monitor}</td>
-                <td>${equipo.baseLaptop}</td>
-                <td>${equipo.modeloTelefono}</td>
-                <td>${equipo.macTelefono}</td>
-                <td>${equipo.extension}</td>
-                <td>${equipo.marcaCelular}</td>
-                <td>${equipo.modeloCelular}</td>
-                <td>${equipo.ipCelular}</td>
-                <td>${equipo.macCelular}</td>
-                <td>${equipo.otros}</td>
-                <td>
-                    <button class="button" onclick="editarDatos(${index})">Editar</button>
-                    <button class="button" onclick="eliminarDatos(${index})">Eliminar</button>
-                </td>
-            `;
-            row.className = equipo.estado === 'reasignado' ? 'reasignado' : 'baja';
-        });
-    }
-
-    function editarDatos(index) {
-        const equipo = equipos[index];
-        document.getElementById('nombreUsuario').value = equipo.nombreUsuario;
-        document.getElementById('numeroEmpleado').value = equipo.numeroEmpleado;
-        document.getElementById('empresa').value = equipo.empresa;
-        document.getElementById('puesto').value = equipo.puesto;
-        document.getElementById('area').value = equipo.area;
-        document.getElementById('tipoEquipo').value = equipo.tipoEquipo;
-        document.getElementById('modelo').value = equipo.modelo;
-        document.getElementById('marca').value = equipo.marca;
-        document.getElementById('numeroSerie').value = equipo.numeroSerie;
-        document.getElementById('ram').value = equipo.ram;
-        document.getElementById('almacenamiento').value = equipo.almacenamiento;
-        document.getElementById('ip').value = equipo.ip;
-        document.getElementById('ipWifi').value = equipo.ipWifi;
-        document.getElementById('mac').value = equipo.mac;
-        document.getElementById('idProducto').value = equipo.idProducto;
-        document.getElementById('hostname').value = equipo.hostname;
-        document.getElementById('usuarioSAP').value = equipo.usuarioSAP;
-        document.getElementById('tipoLicenciaSAP').value = equipo.tipoLicenciaSAP;
-        document.getElementById('clickView').value = equipo.clickView;
-        document.getElementById('kitTecladoMouse').value = equipo.kitTecladoMouse;
-        document.getElementById('monitor').value = equipo.monitor;
-        document.getElementById('baseLaptop').value = equipo.baseLaptop;
-        document.getElementById('modeloTelefono').value = equipo.modeloTelefono;
-        document.getElementById('macTelefono').value = equipo.macTelefono;
-        document.getElementById('extension').value = equipo.extension;
-        document.getElementById('marcaCelular').value = equipo.marcaCelular;
-        document.getElementById('modeloCelular').value = equipo.modeloCelular;
-        document.getElementById('ipCelular').value = equipo.ipCelular;
-        document.getElementById('macCelular').value = equipo.macCelular;
-        document.getElementById('otros').value = equipo.otros;
-        document.getElementById('estado').value = equipo.estado;
-
-        editIndex = index;
-    }
-
-    function eliminarDatos(index) {
-        equipos.splice(index, 1);
-        mostrarDatos();
-    }
-
-    function buscar() {
-        const input = document.getElementById('searchInput');
-        const filter = input.value.toLowerCase();
-        const rows = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-
-        Array.from(rows).forEach(row => {
-            const nombreUsuario = row.cells[0].textContent.toLowerCase();
-            row.style.display = nombreUsuario.includes(filter) ? '' : 'none';
-        });
-    }
-
-    function generarPDF() {
-        let pdfContent = 'Sistema de Inventario\n\n';
-        equipos.forEach((equipo, index) => {
-            pdfContent += `Equipo ${index + 1}:\n`;
-            pdfContent += `Nombre de Usuario: ${equipo.nombreUsuario}\n`;
-            pdfContent += `Número de Empleado: ${equipo.numeroEmpleado}\n`;
-            pdfContent += `Empresa: ${equipo.empresa}\n`;
-            pdfContent += `Puesto: ${equipo.puesto}\n`;
-            pdfContent += `Área: ${equipo.area}\n`;
-            pdfContent += `Tipo de Equipo: ${equipo.tipoEquipo}\n`;
-            pdfContent += `Modelo: ${equipo.modelo}\n`;
-            pdfContent += `Marca: ${equipo.marca}\n`;
-            pdfContent += `Número de Serie: ${equipo.numeroSerie}\n`;
-            pdfContent += `RAM: ${equipo.ram}\n`;
-            pdfContent += `Almacenamiento: ${equipo.almacenamiento}\n`;
-            pdfContent += `IP: ${equipo.ip}\n`;
-            pdfContent += `IP Wifi: ${equipo.ipWifi}\n`;
-            pdfContent += `MAC: ${equipo.mac}\n`;
-            pdfContent += `ID del Producto: ${equipo.idProducto}\n`;
-            pdfContent += `Hostname: ${equipo.hostname}\n`;
-            pdfContent += `Usuario SAP: ${equipo.usuarioSAP}\n`;
-            pdfContent += `Tipo de Licencia SAP: ${equipo.tipoLicenciaSAP}\n`;
-            pdfContent += `ClickView: ${equipo.clickView}\n`;
-            pdfContent += `Kit Teclado y Mouse: ${equipo.kitTecladoMouse}\n`;
-            pdfContent += `Monitor: ${equipo.monitor}\n`;
-            pdfContent += `Base para Laptop: ${equipo.baseLaptop}\n`;
-            pdfContent += `Modelo de Teléfono: ${equipo.modeloTelefono}\n`;
-            pdfContent += `MAC Teléfono: ${equipo.macTelefono}\n`;
-            pdfContent += `Extensión: ${equipo.extension}\n`;
-            pdfContent += `Marca de Celular: ${equipo.marcaCelular}\n`;
-            pdfContent += `Modelo de Celular: ${equipo.modeloCelular}\n`;
-            pdfContent += `IP Celular: ${equipo.ipCelular}\n`;
-            pdfContent += `MAC Celular: ${equipo.macCelular}\n`;
-            pdfContent += `Otros: ${equipo.otros}\n\n`;
-        });
-
-        const blob = new Blob([pdfContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'inventario.txt';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
+const inventory = [];
+
+// Guardar equipo
+document.getElementById('inventoryForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const equipment = {
+        username: document.getElementById('username').value,
+        employeeNumber: document.getElementById('employeeNumber').value,
+        company: document.getElementById('company').value,
+        position: document.getElementById('position').value,
+        area: document.getElementById('area').value,
+        equipmentType: document.getElementById('equipmentType').value,
+        model: document.getElementById('model').value,
+        brand: document.getElementById('brand').value,
+        serialNumber: document.getElementById('serialNumber').value,
+        ram: document.getElementById('ram').value,
+        storage: document.getElementById('storage').value,
+        ip: document.getElementById('ip').value,
+        wifiIp: document.getElementById('wifiIp').value,
+        mac: document.getElementById('mac').value,
+        productId: document.getElementById('productId').value,
+        hostname: document.getElementById('hostname').value,
+        sapUser: document.getElementById('sapUser').value,
+        sapLicenseType: document.getElementById('sapLicenseType').value,
+        clickView: document.getElementById('clickView').value,
+        keyboardMouse: document.getElementById('keyboardMouse').value,
+        monitor: document.getElementById('monitor').value,
+        laptopBase: document.getElementById('laptopBase').value,
+        phoneModel: document.getElementById('phoneModel').value,
+        phoneMac: document.getElementById('phoneMac').value,
+        extension: document.getElementById('extension').value,
+        cellBrand: document.getElementById('cellBrand').value,
+        cellModel: document.getElementById('cellModel').value,
+        cellIp: document.getElementById('cellIp').value,
+        cellMac: document.getElementById('cellMac').value,
+        other: document.getElementById('other').value,
+        status: 'normal' // Inicialmente se establece como 'normal'
+    };
+
+    inventory.push(equipment);
+    document.getElementById('inventoryForm').reset();
+    alert('Equipo guardado con éxito!');
+});
+
+// Mostrar datos en el dashboard
+document.getElementById('showData').addEventListener('click', function() {
+    const dashboard = document.getElementById('dashboard');
+    dashboard.innerHTML = '';
+
+    const groupedByCompany = inventory.reduce((acc, item) => {
+        acc[item.company] = acc[item.company] || [];
+        acc[item.company].push(item);
+        return acc;
+    }, {});
+
+    for (const [company, items] of Object.entries(groupedByCompany)) {
+        const companyDiv = document.createElement('div');
+        companyDiv.innerHTML = `<h2>${company}</h2>`;
+        
+        items.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.innerHTML = `
+                <p>${item.username} - ${item.equipmentType}</p>
+                <button onclick="editItem('${item.username}')">Editar</button>
+                <button onclick="deleteItem('${item.username}')">Eliminar</button>
+                <span style="color: ${item.status === 'reasignado' ? 'green' : item.status === 'normal' ? 'yellow' : 'red'};">
+                    Estado: ${item.status}
+                </span>
+            `;
+            companyDiv.appendChild(itemDiv);
+        });
+        dashboard.appendChild(companyDiv);
+    }
+});
+
+// Buscar usuario
+document.getElementById('searchBtn').addEventListener('click', function() {
+    const searchQuery = document.getElementById('searchUser').value.toLowerCase();
+    const results = inventory.filter(item => item.username.toLowerCase().includes(searchQuery));
+    
+    const dashboard = document.getElementById('dashboard');
+    dashboard.innerHTML = '';
+    
+    results.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.innerHTML = `<p>${item.username} - ${item.equipmentType}</p>`;
+        dashboard.appendChild(itemDiv);
+    });
+});
+
+// Generar PDF
+document.getElementById('generatePDF').addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.text("Datos de Inventario", 10, 10);
+    let y = 20;
+
+    inventory.forEach(item => {
+        doc.text(`Usuario: ${item.username}, Equipo: ${item.equipmentType}`, 10, y);
+        y += 10;
+    });
+
+    doc.save('inventario.pdf');
+});
+
+// Editar equipo
+function editItem(username) {
+    const item = inventory.find(i => i.username === username);
+    // Implementa la lógica para editar el item
+    alert(`Editando ${username}`);
+}
+
+// Eliminar equipo
+function deleteItem(username) {
+    const index = inventory.findIndex(i => i.username === username);
+    if (index > -1) {
+        inventory.splice(index, 1);
+        alert(`Equipo ${username} eliminado.`);
+    }
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+input, select, button {
+    margin: 5px 0;
+    padding: 10px;
+    width: 200px;
+}
+
+#dashboard {
+    margin-top: 20px;
+}
