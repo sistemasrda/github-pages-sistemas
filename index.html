@@ -55,6 +55,14 @@
         #searchSection {
             margin-bottom: 20px;
         }
+        .baja {
+            background-color: red;
+            color: white;
+        }
+        .reasignado {
+            background-color: green;
+            color: white;
+        }
         #pdfButton {
             background-color: #007bff;
         }
@@ -65,7 +73,7 @@
 </head>
 <body>
 
-<h1>Sistema de Inventario TI</h1>
+<h1>Sistema de Inventario</h1>
 
 <div id="searchSection">
     <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario" oninput="buscar()">
@@ -205,6 +213,7 @@
                 <th>IP Celular</th>
                 <th>MAC Celular</th>
                 <th>Otros</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -215,6 +224,7 @@
 
 <script>
     const equipos = [];
+    let editIndex = -1;
 
     function guardarEquipo() {
         const equipo = {
@@ -250,7 +260,13 @@
             otros: document.getElementById('otros').value,
         };
 
-        equipos.push(equipo);
+        if (editIndex === -1) {
+            equipos.push(equipo);
+        } else {
+            equipos[editIndex] = equipo;
+            editIndex = -1;
+        }
+        
         mostrarEquipos();
         document.getElementById('formEquipo').reset();
     }
@@ -259,11 +275,30 @@
         const tablaEquipos = document.getElementById('tablaEquipos').getElementsByTagName('tbody')[0];
         tablaEquipos.innerHTML = ''; // Limpiar tabla
 
-        equipos.forEach(equipo => {
+        equipos.forEach((equipo, index) => {
             const fila = tablaEquipos.insertRow();
             for (const prop in equipo) {
                 const celda = fila.insertCell();
                 celda.textContent = equipo[prop];
+            }
+
+            // Botones para editar y eliminar
+            const celdaAcciones = fila.insertCell();
+            const botonEditar = document.createElement('button');
+            botonEditar.textContent = 'Editar';
+            botonEditar.onclick = () => editarEquipo(index);
+            celdaAcciones.appendChild(botonEditar);
+
+            const botonEliminar = document.createElement('button');
+            botonEliminar.textContent = 'Eliminar';
+            botonEliminar.onclick = () => eliminarEquipo(index);
+            celdaAcciones.appendChild(botonEliminar);
+
+            // Cambiar color según el estado
+            if (equipo.estado === 'reasignado') {
+                fila.classList.add('reasignado');
+            } else if (equipo.estado === 'baja') {
+                fila.classList.add('baja');
             }
         });
     }
@@ -277,6 +312,46 @@
             const celdaNombreUsuario = filas[i].cells[0].textContent.toLowerCase();
             filas[i].style.display = celdaNombreUsuario.includes(query) ? '' : 'none';
         }
+    }
+
+    function editarEquipo(index) {
+        const equipo = equipos[index];
+        document.getElementById('nombreUsuario').value = equipo.nombreUsuario;
+        document.getElementById('numeroEmpleado').value = equipo.numeroEmpleado;
+        document.getElementById('empresa').value = equipo.empresa;
+        document.getElementById('puesto').value = equipo.puesto;
+        document.getElementById('area').value = equipo.area;
+        document.getElementById('tipoEquipo').value = equipo.tipoEquipo;
+        document.getElementById('modelo').value = equipo.modelo;
+        document.getElementById('marca').value = equipo.marca;
+        document.getElementById('numeroSerie').value = equipo.numeroSerie;
+        document.getElementById('ram').value = equipo.ram;
+        document.getElementById('almacenamiento').value = equipo.almacenamiento;
+        document.getElementById('ip').value = equipo.ip;
+        document.getElementById('ipWifi').value = equipo.ipWifi;
+        document.getElementById('mac').value = equipo.mac;
+        document.getElementById('idProducto').value = equipo.idProducto;
+        document.getElementById('hostname').value = equipo.hostname;
+        document.getElementById('usuarioSAP').value = equipo.usuarioSAP;
+        document.getElementById('tipoLicenciaSAP').value = equipo.tipoLicenciaSAP;
+        document.getElementById('clickView').value = equipo.clickView;
+        document.getElementById('kitTecladoMouse').value = equipo.kitTecladoMouse;
+        document.getElementById('monitor').value = equipo.monitor;
+        document.getElementById('baseLaptop').value = equipo.baseLaptop;
+        document.getElementById('modeloTelefono').value = equipo.modeloTelefono;
+        document.getElementById('macTelefono').value = equipo.macTelefono;
+        document.getElementById('extension').value = equipo.extension;
+        document.getElementById('marcaCelular').value = equipo.marcaCelular;
+        document.getElementById('modeloCelular').value = equipo.modeloCelular;
+        document.getElementById('ipCelular').value = equipo.ipCelular;
+        document.getElementById('macCelular').value = equipo.macCelular;
+        document.getElementById('otros').value = equipo.otros;
+        editIndex = index;
+    }
+
+    function eliminarEquipo(index) {
+        equipos.splice(index, 1);
+        mostrarEquipos();
     }
 
     function generarPDF() {
