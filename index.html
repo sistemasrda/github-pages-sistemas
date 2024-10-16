@@ -1,204 +1,313 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Inventario</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .form-container, .dashboard { margin: 20px; }
-        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .table, .table th, .table td { border: 1px solid black; }
-        .table th, .table td { padding: 10px; text-align: left; }
-        .status-verde { background-color: green; color: white; }
-        .status-amarillo { background-color: yellow; }
-        .status-rojo { background-color: red; color: white; }
-    </style>
-</head>
-<body>
+<cabeza>
+    <meta conjunto de caracteres="UTF-8">
+    <meta name="viewport" content="ancho=ancho-del-dispositivo, escala-inicial=1.0">
+    <title>Sistema de Inventario de Equipos</title>
+    <estilo>
+        cuerpo {
+            familia de fuentes: Arial, sans-serif;
+            margen: 0;
+            relleno: 0;
+        }
 
-    <div class="form-container">
-        <h2>Agregar Equipo</h2>
-        <form id="inventoryForm">
-            <input type="text" placeholder="Nombre de Usuario" required>
-            <input type="text" placeholder="Número de Empleado" required>
-            <input type="text" placeholder="Empresa" required>
-            <input type="text" placeholder="Puesto" required>
-            <input type="text" placeholder="Área" required>
-            <input type="text" placeholder="Tipo de Equipo" required>
-            <input type="text" placeholder="Modelo" required>
-            <input type="text" placeholder="Marca" required>
-            <input type="text" placeholder="Número de Serie" required>
-            <input type="text" placeholder="RAM" required>
-            <input type="text" placeholder="Almacenamiento" required>
-            <input type="text" placeholder="IP" required>
-            <input type="text" placeholder="IP Wifi" required>
-            <input type="text" placeholder="MAC" required>
-            <input type="text" placeholder="ID del Producto" required>
-            <input type="text" placeholder="Hostname" required>
-            <input type="text" placeholder="Usuario SAP" required>
-            <input type="text" placeholder="Tipo de Licencia SAP" required>
-            <input type="text" placeholder="ClickView" required>
-            <input type="text" placeholder="Kit Teclado y Mouse" required>
-            <input type="text" placeholder="Monitor" required>
-            <input type="text" placeholder="Base para Laptop" required>
-            <input type="text" placeholder="Modelo de Teléfono" required>
-            <input type="text" placeholder="MAC Teléfono" required>
-            <input type="text" placeholder="Extensión" required>
-            <input type="text" placeholder="Marca de Celular" required>
-            <input type="text" placeholder="Modelo de Celular" required>
-            <input type="text" placeholder="IP Celular" required>
-            <input type="text" placeholder="MAC Celular" required>
-            <button type="submit">Guardar</button>
-        </form>
-    </div>
+        .contenido {
+            relleno: 20px;
+            color de fondo: rgba(255, 255, 255, 0.9);
+        }
 
-    <button onclick="toggleDashboard()">Datos</button>
-    
-    <div class="dashboard" id="dashboard" style="display:none;">
-        <h2>Dashboard</h2>
-        <input type="text" id="searchInput" placeholder="Buscar por Nombre de Usuario" onkeyup="searchUser()">
-        <table class="table" id="dataTable">
-            <thead>
+        h1 {
+            alinear texto: centro;
+            margen inferior: 30px;
+        }
+
+        forma {
+            pantalla: cuadrícula;
+            columnas de plantilla de cuadrícula: 1fr 1fr;
+            espacio: 20px;
+            margen inferior: 30px;
+        }
+
+        etiqueta {
+            margen inferior: 5px;
+            peso de fuente: negrita;
+        }
+
+        aporte {
+            relleno: 8px;
+            ancho: 100%;
+            tamaño de caja: borde-caja;
+        }
+
+        botón {
+            relleno: 10px;
+            color de fondo: #28a745;
+            color: blanco;
+            borde: ninguno;
+            cursor: puntero;
+        }
+
+        mesa {
+            ancho: 100%;
+            colapso-frontera: colapso;
+            margen superior: 20px;
+        }
+
+        mesa, th, td {
+            borde: 1px sólido #ddd;
+        }
+
+        el, td {
+            relleno: 12px;
+            alinear texto: izquierda;
+        }
+
+        el {
+            color de fondo: #4CAF50;
+            color: blanco;
+        }
+
+        .cuadro de búsqueda {
+            margen inferior: 20px;
+            alinear texto: centro;
+        }
+
+        .cuadro de búsqueda entrada {
+            relleno: 10px;
+            ancho: 300px;
+            tamaño de fuente: 16px;
+        }
+
+        Botón .search-box {
+            relleno: 10px;
+            color de fondo: #007bff;
+            color: blanco;
+            borde: ninguno;
+            cursor: puntero;
+        }
+    </estilo>
+</cabeza>
+<cuerpo>
+
+    <div class="contenido">
+        <h1>Sistema de Inventario de Equipos</h1>
+
+        <!-- Formulario para agregar equipos -->
+        <form id="formEquipo">
+            <div>
+                <label for="usuario">Nombre de Usuario:</label>
+                <input type="text" id="usuario" name="usuario" requerido>
+            </div>
+            <div>
+                <label for="numEmpleado">Número de Empleado:</label>
+                <input type="text" id="numEmpleado" name="numEmpleado" requerido>
+            </div>
+            <div>
+                <label for="puesto">Puesto:</label>
+                <input type="text" id="puesto" name="puesto" requerido>
+            </div>
+            <div>
+                <label for="area">Área:</label>
+                <input type="text" id="area" name="area" requerido>
+            </div>
+            <div>
+                <label for="tipoEquipo">Tipo de Equipo:</label>
+                <input type="text" id="tipoEquipo" name="tipoEquipo" requerido>
+            </div>
+            <div>
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" requerido>
+            </div>
+            <div>
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" name="marca" requerido>
+            </div>
+            <div>
+                <label for="numSerie">Número de Serie:</label>
+                <tipo de entrada="texto" id="numSerie" nombre="numSerie" requerido>
+            </div>
+            <div>
+                <label for="ram">RAM:</label>
+                <tipo de entrada="texto" id="ram" nombre="ram" requerido>
+            </div>
+            <div>
+                <label for="almacenamiento">Almacenamiento:</label>
+                <tipo de entrada="texto" id="almacenamiento" nombre="almacenamiento" requerido>
+            </div>
+            <div>
+                <label for="ip">IP:</label>
+                <tipo de entrada="texto" id="ip" nombre="ip" requerido>
+            </div>
+            <div>
+                <label for="ipWifi">IP WiFi:</label>
+                <tipo de entrada="texto" id="ipWifi" nombre="ipWifi" requerido>
+            </div>
+            <div>
+                <label for="mac">MAC:</label>
+                <tipo de entrada="texto" id="mac" nombre="mac" requerido>
+            </div>
+            <div>
+                <label for="idProducto">ID del Producto:</label>
+                <tipo de entrada="texto" id="idProducto" nombre="idProducto" requerido>
+            </div>
+            <div>
+                <label for="hostname">Nombre de host:</label>
+                <input type="text" id="nombre de host" name="nombre de host" requerido>
+            </div>
+            <div>
+                <label for="usuarioSAP">Usuario SAP:</label>
+                <tipo de entrada="texto" id="usuarioSAP" nombre="usuarioSAP" requerido>
+            </div>
+            <div>
+                <label for="tipoLicenciaSAP">Tipo de Licencia SAP:</label>
+                <input type="text" id="tipoLicenciaSAP" name="tipoLicenciaSAP" requerido>
+            </div>
+            <div>
+                <label for="clickView">ClickView:</label>
+                <tipo de entrada="texto" id="clickView" nombre="clickView" requerido>
+            </div>
+            <div>
+                <label for="kitTecladoMouse">Kit Teclado y Mouse:</label>
+                <tipo de entrada="texto" id="kitTecladoMouse" nombre="kitTecladoMouse" requerido>
+            </div>
+            <div>
+                <label for="monitor">Monitor:</label>
+                <tipo de entrada="texto" id="monitor" nombre="monitor" requerido>
+            </div>
+            <div>
+                <label for="baseLaptop">Base para Laptop:</label>
+                <tipo de entrada="texto" id="baseLaptop" nombre="baseLaptop" requerido>
+            </div>
+            <div>
+                <label for="modeloTelefono">Modelo de Teléfono:</label>
+                <input type="text" id="modeloTelefono" name="modeloTelefono" requerido>
+            </div>
+            <div>
+                <label for="macTelefono">MAC Teléfono:</label>
+                <input type="text" id="macTelefono" name="macTelefono" requerido>
+            </div>
+            <div>
+                <label for="extension">Extensión:</label>
+                <tipo de entrada="texto" id="extensión" nombre="extensión" requerido>
+            </div>
+            <div>
+                <label for="marcaCelular">Marca de Celular:</label>
+                <tipo de entrada="texto" id="marcaCelular" nombre="marcaCelular" requerido>
+            </div>
+            <div>
+                <label for="modeloCelular">Modelo de Celular:</label>
+                <tipo de entrada="texto" id="modeloCelular" nombre="modeloCelular" requerido>
+            </div>
+            <div>
+                <label for="ipCelular">IP Celular:</label>
+                <tipo de entrada="texto" id="ipCelular" nombre="ipCelular" requerido>
+            </div>
+            <div>
+                <label for="macCelular">MAC Celular:</label>
+                <tipo de entrada="texto" id="macCelular" nombre="macCelular" requerido>
+            </div>
+            <div>
+                <label for="otros">Otros:</label>
+                <input type="text" id="otros" name="otros" requerido>
+            </div>
+
+            <button type="button" onclick="agregarEquipo()">Guardar</button>
+            <button type="button" onclick="generarPDF()">Generar PDF</button>
+        </formulario>
+
+        <!-- Búsqueda por nombre de usuario -->
+        <div class="cuadro de búsqueda">
+            <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario">
+            <button onclick="buscar()">Buscar</button>
+        </div>
+
+        <!-- Tabla de inventario -->
+        <table id="tablaInventario">
+            <cabeza>
                 <tr>
-                    <th>Nombre de Usuario</th>
-                    <th>Número de Empleado</th>
-                    <th>Empresa</th>
+                    <th>Nombre de usuario</th>
+                    <th>Número de empleado</th>
                     <th>Puesto</th>
                     <th>Área</th>
-                    <th>Tipo de Equipo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th>Tipo de equipo</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Numero de serie</th>
+                    <th>RAM</th>
+                    <th>Almacenamiento</th>
+                    IP
+                    IP WiFi
+                    MAC
+                    <th>ID del producto</th>
+                    <th>Nombre de host</th>
+                    <th>Usuario SAP</th>
+                    <th>Tipo de Licencia SAP</th>
+                    <th>Vista de clic</th>
+                    <th>Kit de teclado y ratón</th>
+                    <th>Monitorizar</th>
+                    <th>Base para Laptop</th>
+                    <th>Modelo de Teléfono</th>
+                    <th>MAC Teléfono</th>
+                    <th>Extensión</th>
+                    <th>Marca de Celular</th>
+                    <th>Modelo de Celular</th>
+                    IP Celular
+                    MAC Celular
+                    <th>Otros</th>
                 </tr>
-            </thead>
-            <tbody id="dataBody"></tbody>
-        </table>
-        <button onclick="generatePDF()">Generar PDF</button>
+            </cabeza>
+            <cuerpo>
+                <!-- Filas dinámicamente agregadas aquí -->
+            </cuerpo>
+        </tabla>
     </div>
 
-    <script>
-        const data = [];
+    <!-- Librería jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-        document.getElementById('inventoryForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formElements = event.target.elements;
-            const equipment = {
-                username: formElements[0].value,
-                employeeNumber: formElements[1].value,
-                company: formElements[2].value,
-                position: formElements[3].value,
-                area: formElements[4].value,
-                equipmentType: formElements[5].value,
-                model: formElements[6].value,
-                brand: formElements[7].value,
-                serialNumber: formElements[8].value,
-                ram: formElements[9].value,
-                storage: formElements[10].value,
-                ip: formElements[11].value,
-                wifiIp: formElements[12].value,
-                mac: formElements[13].value,
-                productId: formElements[14].value,
-                hostname: formElements[15].value,
-                sapUser: formElements[16].value,
-                sapLicense: formElements[17].value,
-                clickView: formElements[18].value,
-                keyboardMouseKit: formElements[19].value,
-                monitor: formElements[20].value,
-                laptopBase: formElements[21].value,
-                phoneModel: formElements[22].value,
-                phoneMac: formElements[23].value,
-                extension: formElements[24].value,
-                cellBrand: formElements[25].value,
-                cellModel: formElements[26].value,
-                cellIp: formElements[27].value,
-                cellMac: formElements[28].value,
-                status: 'normal' // Default status, can be changed based on your logic
-            };
-            data.push(equipment);
-            displayData();
-            event.target.reset();
-        });
+    <guión>
+        const form = document.getElementById('formEquipo');
+        const tablaInventario = document.getElementById('tablaInventario').getElementsByTagName('tbody')[0];
 
-        function displayData() {
-            const dataBody = document.getElementById('dataBody');
-            dataBody.innerHTML = '';
-            data.forEach((equipment, index) => {
-                const row = document.createElement('tr');
-                row.className = getStatusClass(equipment.status);
-                row.innerHTML = `
-                    <td>${equipment.username}</td>
-                    <td>${equipment.employeeNumber}</td>
-                    <td>${equipment.company}</td>
-                    <td>${equipment.position}</td>
-                    <td>${equipment.area}</td>
-                    <td>${equipment.equipmentType}</td>
-                    <td>${equipment.status}</td>
-                    <td>
-                        <button onclick="editEquipment(${index})">Editar</button>
-                        <button onclick="deleteEquipment(${index})">Eliminar</button>
-                    </td>
-                `;
-                dataBody.appendChild(row);
+        // Función para agregar un equipo
+        función agregarEquipo() {
+            const formValues ​​= Array.from(new FormData(form).entries()).map(entrada => entrada[1]);
+            const fila = tablaInventario.insertRow();
+            formValues.forEach(valor => {
+                const celda = fila.insertCell();
+                celda.textContent = valor;
+            });
+            formulario.reset();
+        }
+
+        // Función para buscar por nombre de usuario
+        función buscar() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filas = tablaInventario.getElementsByTagName('tr');
+            Array.from(filas).forEach(fila => {
+                const texto = fila.getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
+                fila.style.display = texto.includes(searchInput) ? '' : 'ninguno';
             });
         }
 
-        function getStatusClass(status) {
-            switch (status) {
-                case 'reasignado':
-                    return 'status-verde';
-                case 'normal':
-                    return 'status-amarillo';
-                case 'baja':
-                    return 'status-rojo';
-                default:
-                    return '';
-            }
-        }
-
-        function toggleDashboard() {
-            const dashboard = document.getElementById('dashboard');
-            dashboard.style.display = dashboard.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function searchUser() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
-            const filteredData = data.filter(equipment => equipment.username.toLowerCase().includes(searchValue));
-            const dataBody = document.getElementById('dataBody');
-            dataBody.innerHTML = '';
-            filteredData.forEach((equipment, index) => {
-                const row = document.createElement('tr');
-                row.className = getStatusClass(equipment.status);
-                row.innerHTML = `
-                    <td>${equipment.username}</td>
-                    <td>${equipment.employeeNumber}</td>
-                    <td>${equipment.company}</td>
-                    <td>${equipment.position}</td>
-                    <td>${equipment.area}</td>
-                    <td>${equipment.equipmentType}</td>
-                    <td>${equipment.status}</td>
-                    <td>
-                        <button onclick="editEquipment(${index})">Editar</button>
-                        <button onclick="deleteEquipment(${index})">Eliminar</button>
-                    </td>
-                `;
-                dataBody.appendChild(row);
+        // Función para generar PDF usando jsPDF
+        función generarPDF() {
+            const { jsPDF } = ventana.jspdf;
+            const doc = nuevo jsPDF();
+            doc.text("Inventario de Equipos", 10, 10);
+            sea ​​y = 20;
+            Array.from(tablaInventario.getElementsByTagName('tr')).forEach(fila => {
+                const filaText = Array.from(fila.getElementsByTagName('td')).map(celda => celda.textContent).join(' | ');
+                doc.text(filaTexto, 10, y);
+                y += 10;
+                si (y > 280) {
+                    doc.addPage();
+                    y = 10;
+                }
             });
-        }
-
-        function editEquipment(index) {
-            // Implement your edit logic here
-            alert('Edit function not implemented yet.');
-        }
-
-        function deleteEquipment(index) {
-            data.splice(index, 1);
-            displayData();
-        }
-
-        function generatePDF() {
-            alert('Generar PDF no implementado aún.');
-            // You can use a library like jsPDF to implement this functionality
+            doc.save('inventario_equipos.pdf');
         }
     </script>
-</body>
+
+</cuerpo>
 </html>
