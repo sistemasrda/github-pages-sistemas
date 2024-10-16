@@ -12,12 +12,12 @@
             background-color: #f0f0f0;
         }
         h1 {
-            text-align: CENTER;
+            text-align: center;
         }
         form {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            gap: 15px;
             margin-bottom: 30px;
         }
         label {
@@ -25,7 +25,7 @@
         }
         input, select {
             padding: 8px;
-            width: 30%;
+            width: 100%;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
@@ -73,7 +73,7 @@
 </head>
 <body>
 
-<h1>Sistema de InventariO TI</h1>
+<h1>Sistema de Inventario</h1>
 
 <div id="searchSection">
     <input type="text" id="searchInput" placeholder="Buscar por nombre de usuario" oninput="buscar()">
@@ -175,8 +175,9 @@
     <input type="text" id="otros">
 
     <button type="button" onclick="guardarEquipo()">Guardar</button>
-    <button type="button" id="pdfButton" onclick="generarPDF()">Generar PDF</button>
 </form>
+
+<button onclick="mostrarDatos()">Mostrar Datos</button>
 
 <div>
     <h2>Dashboard</h2>
@@ -213,6 +214,7 @@
                 <th>IP Celular</th>
                 <th>MAC Celular</th>
                 <th>Otros</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -258,6 +260,7 @@
             ipCelular: document.getElementById('ipCelular').value,
             macCelular: document.getElementById('macCelular').value,
             otros: document.getElementById('otros').value,
+            estado: document.getElementById('estado').value
         };
 
         if (editIndex === -1) {
@@ -266,7 +269,7 @@
             equipos[editIndex] = equipo;
             editIndex = -1;
         }
-        
+
         mostrarEquipos();
         document.getElementById('formEquipo').reset();
     }
@@ -352,6 +355,11 @@
     function eliminarEquipo(index) {
         equipos.splice(index, 1);
         mostrarEquipos();
+    }
+
+    function mostrarDatos() {
+        const tablaEquipos = document.getElementById('tablaEquipos');
+        tablaEquipos.style.display = 'block'; // Mostrar la tabla de equipos
     }
 
     function generarPDF() {
