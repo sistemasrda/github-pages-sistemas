@@ -9,11 +9,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
 
         .content {
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9);
         }
 
         h1 {
@@ -86,12 +86,14 @@
             cursor: pointer;
         }
 
-        .edit-mode {
-            background-color: #f0f0f0;
+        .baja-btn {
+            background-color: red;
+            color: white;
         }
 
-        .save-btn {
-            background-color: #28a745;
+        .alta-btn {
+            background-color: green;
+            color: white;
         }
 
         .edit-btn {
@@ -100,6 +102,11 @@
 
         .delete-btn {
             background-color: #dc3545;
+            color: white;
+        }
+
+        .save-btn {
+            background-color: #28a745;
         }
 
     </style>
@@ -166,6 +173,10 @@
             <div>
                 <label for="idProducto">ID del Producto:</label>
                 <input type="text" id="idProducto" name="idProducto" required>
+            </div>
+            <div>
+                <label for="so">Sistema Operativo:</label>
+                <input type="text" id="so" name="so" required>
             </div>
             <div>
                 <label for="hostname">Hostname:</label>
@@ -254,19 +265,20 @@
                     <th>IP</th>
                     <th>IP WiFi</th>
                     <th>MAC</th>
-                    <th>ID del Producto</th>
+                    <th>ID Producto</th>
+                    <th>S.O</th>
                     <th>Hostname</th>
                     <th>Usuario SAP</th>
-                    <th>Tipo de Licencia SAP</th>
+                    <th>Tipo Licencia SAP</th>
                     <th>ClickView</th>
                     <th>Kit Teclado y Mouse</th>
                     <th>Monitor</th>
                     <th>Base para Laptop</th>
-                    <th>Modelo de Teléfono</th>
+                    <th>Modelo Teléfono</th>
                     <th>MAC Teléfono</th>
                     <th>Extensión</th>
-                    <th>Marca de Celular</th>
-                    <th>Modelo de Celular</th>
+                    <th>Marca Celular</th>
+                    <th>Modelo Celular</th>
                     <th>IP Celular</th>
                     <th>MAC Celular</th>
                     <th>Otros</th>
@@ -305,7 +317,7 @@
                     cell.textContent = value;
                 });
                 const accionesCell = fila.insertCell();
-                accionesCell.innerHTML = '<button class="edit-btn" onclick="editarEquipo(this)">Editar</button> <button class="delete-btn" onclick="eliminarEquipo(this)">Eliminar</button>';
+                accionesCell.innerHTML = '<button class="edit-btn" onclick="editarEquipo(this)">Editar</button> <button class="baja-btn" onclick="bajaEquipo(this)">Dar de baja</button> <button class="alta-btn" onclick="altaEquipo(this)">Reactivar</button> <button class="delete-btn" onclick="eliminarEquipo(this)">Eliminar</button>';
             }
             form.reset();
         }
@@ -334,6 +346,18 @@
         function eliminarEquipo(boton) {
             const fila = boton.closest('tr');
             tablaInventario.deleteRow(fila.rowIndex - 1);
+        }
+
+        // Función para dar de baja un equipo
+        function bajaEquipo(boton) {
+            const fila = boton.closest('tr');
+            fila.style.backgroundColor = 'red';
+        }
+
+        // Función para reactivar un equipo
+        function altaEquipo(boton) {
+            const fila = boton.closest('tr');
+            fila.style.backgroundColor = 'green';
         }
 
         // Función para generar PDF usando jsPDF
