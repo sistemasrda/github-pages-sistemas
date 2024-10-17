@@ -9,10 +9,9 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+        }
 
         .content {
-            position: relative;
-            z-index: 1;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.9);
         }
@@ -86,12 +85,27 @@
             border: none;
             cursor: pointer;
         }
+
+        .btn-accion {
+            padding: 5px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .btn-editar {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
     </style>
 </head>
 <body>
-
-    
-
     <div class="content">
         <h1>Sistema de Inventario de Equipos</h1>
 
@@ -242,6 +256,7 @@
                     <th>IP Celular</th>
                     <th>MAC Celular</th>
                     <th>Otros</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -256,16 +271,55 @@
     <script>
         const form = document.getElementById('formEquipo');
         const tablaInventario = document.getElementById('tablaInventario').getElementsByTagName('tbody')[0];
+        let editandoFila = null;
 
         // Función para agregar un equipo
         function agregarEquipo() {
             const formValues = Array.from(new FormData(form).entries()).map(entry => entry[1]);
-            const fila = tablaInventario.insertRow();
-            formValues.forEach(value => {
-                const cell = fila.insertCell();
-                cell.textContent = value;
-            });
+
+            if (editandoFila) {
+                // Si estamos editando una fila existente
+                Array.from(editandoFila.cells).forEach((cell, index) => {
+                    if (index < formValues.length) {
+                        cell.textContent = formValues[index];
+                    }
+                });
+                editandoFila = null;
+            } else {
+                // Agregar nueva fila
+                const fila = tablaInventario.insertRow();
+                formValues.forEach(value => {
+                    const cell = fila.insertCell();
+                    cell.textContent = value;
+                });
+
+                // Agregar botones de acción (Editar y Eliminar)
+                const cellAcciones = fila.insertCell();
+                cellAcciones.innerHTML = `
+                    <button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button>
+                    <button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button>
+                `;
+            }
             form.reset();
+        }
+
+        // Función para editar una fila
+        function editarFila(btn) {
+            const fila = btn.parentNode.parentNode;
+            editandoFila = fila;
+
+            // Llenar el formulario con los datos de la fila seleccionada
+            Array.from(fila.cells).forEach((cell, index) => {
+                if (form.elements[index] && index < form.elements.length) {
+                    form.elements[index].value = cell.textContent;
+                }
+            });
+        }
+
+        // Función para eliminar una fila
+        function eliminarFila(btn) {
+            const fila = btn.parentNode.parentNode;
+            fila.remove();
         }
 
         // Función para buscar por nombre de usuario
