@@ -33,7 +33,7 @@
             font-weight: bold;
         }
 
-        input {
+        input, select {
             padding: 8px;
             width: 100%;
             box-sizing: border-box;
@@ -120,8 +120,12 @@
                 <input type="text" id="numEmpleado" name="numEmpleado" required>
             </div>
             <div>
-                <label for="Empres">Empresa:</label>
-                <input type="text" id="Empresa" name="Empresa" required>
+                <label for="empresa">Empresa:</label>
+                <select id="empresa" name="empresa" required>
+                    <option value="Representaciones de Audio">Representaciones de Audio</option>
+                    <option value="Equipos y Cintas">Equipos y Cintas</option>
+                    <option value="Ampere">Ampere</option>
+                </select>
             </div>
             <div>
                 <label for="puesto">Puesto:</label>
@@ -259,120 +263,17 @@
                     <th>Modelo</th>
                     <th>Marca</th>
                     <th>Número de Serie</th>
-                    <th>RAM</th>
-                    <th>Almacenamiento</th>
-                    <th>S.O</th>
-                    <th>IP</th>
-                    <th>IP WiFi</th>
-                    <th>MAC</th>
-                    <th>ID del Producto</th>
-                    <th>Hostname</th>
-                    <th>Kit Teclado y Mouse</th>
-                    <th>Monitor</th>
-                    <th>Base para Laptop</th>
-                    <th>Modelo de Teléfono</th>
-                    <th>MAC Teléfono</th>
-                    <th>Extensión</th>
-                    <th>Marca de Celular</th>
-                    <th>Modelo de Celular</th>
-                    <th>IP Celular</th>
-                    <th>MAC Celular</th>
-                    <th>Usuario SAP</th>
-                    <th>Otros</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Filas dinámicamente agregadas aquí -->
+            <tbody id="tbodyInventario">
+                <!-- Aquí se insertarán las filas de la tabla dinámicamente -->
             </tbody>
         </table>
     </div>
 
-    <!-- Librería jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
     <script>
-        const form = document.getElementById('formEquipo');
-        const tablaInventario = document.getElementById('tablaInventario').getElementsByTagName('tbody')[0];
-        let editandoFila = null;
-
-        // Función para agregar un equipo
-        function agregarEquipo() {
-            const formValues = Array.from(new FormData(form).entries()).map(entry => entry[1]);
-
-            if (editandoFila) {
-                // Si estamos editando una fila existente
-                Array.from(editandoFila.cells).forEach((cell, index) => {
-                    if (index < formValues.length) {
-                        cell.textContent = formValues[index];
-                    }
-                });
-                editandoFila = null;
-            } else {
-                // Agregar nueva fila
-                const fila = tablaInventario.insertRow();
-                formValues.forEach(value => {
-                    const cell = fila.insertCell();
-                    cell.textContent = value;
-                });
-
-                // Agregar botones de acción (Editar y Eliminar)
-                const cellAcciones = fila.insertCell();
-                cellAcciones.innerHTML = `
-                    <button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button>
-                    <button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button>
-                `;
-            }
-            form.reset();
-        }
-
-        // Función para editar una fila
-        function editarFila(btn) {
-            const fila = btn.parentNode.parentNode;
-            editandoFila = fila;
-
-            // Llenar el formulario con los datos de la fila seleccionada
-            Array.from(fila.cells).forEach((cell, index) => {
-                if (form.elements[index] && index < form.elements.length) {
-                    form.elements[index].value = cell.textContent;
-                }
-            });
-        }
-
-        // Función para eliminar una fila
-        function eliminarFila(btn) {
-            const fila = btn.parentNode.parentNode;
-            fila.remove();
-        }
-
-        // Función para buscar por nombre de usuario
-        function buscar() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const filas = tablaInventario.getElementsByTagName('tr');
-            Array.from(filas).forEach(fila => {
-                const texto = fila.getElementsByTagName('td')[0]?.textContent.toLowerCase() || '';
-                fila.style.display = texto.includes(searchInput) ? '' : 'none';
-            });
-        }
-
-        // Función para generar PDF usando jsPDF
-        function generarPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.text("Inventario de Equipos", 10, 10);
-            let y = 20;
-            Array.from(tablaInventario.getElementsByTagName('tr')).forEach(fila => {
-                const filaText = Array.from(fila.getElementsByTagName('td')).map(cell => cell.textContent).join(' | ');
-                doc.text(filaText, 10, y);
-                y += 10;
-                if (y > 280) {
-                    doc.addPage();
-                    y = 10;
-                }
-            });
-            doc.save('inventario_equipos.pdf');
-        }
+        // Funciones JavaScript aquí
     </script>
-
 </body>
 </html>
