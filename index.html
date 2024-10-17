@@ -318,10 +318,10 @@
 
                 // Agregar botones de acción (Editar y Eliminar)
                 const cellAcciones = fila.insertCell();
-                cellAcciones.innerHTML = 
+                cellAcciones.innerHTML = `
                     <button class="btn-accion btn-editar" onclick="editarFila(this)">Editar</button>
                     <button class="btn-accion btn-eliminar" onclick="eliminarFila(this)">Eliminar</button>
-                ;
+                `;
             }
             form.reset();
         }
@@ -375,4 +375,4 @@
     </script>
 
 </body>
-</html> 
+</html>
