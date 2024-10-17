@@ -5,203 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Inventario</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .form-container, .dashboard { margin: 20px; }
-        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .table, .table th, .table td { border: 1px solid black; }
-        .table th, .table td { padding: 10px; text-align: left; }
-        .status-verde { background-color: green; color: white; }
-        .status-amarillo { background-color: yellow; }
-        .status-rojo { background-color: red; color: white; }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+        table {
+            width: 100%;
+        }
+        #logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Sistema de Inventario</h1>
+        
+        <!-- Logo en la esquina superior derecha -->
+        <div id="logo">
+            <img src="ruta-de-la-imagen/Captura-desde-2024-10-16-18-02-47.png" alt="Logo Representaciones de Audio" width="150">
+        </div>
 
-    <div class="form-container">
-        <h2>Agregar Equipo</h2>
-        <form id="inventoryForm">
-            <input type="text" placeholder="Nombre de Usuario" required>
-            <input type="text" placeholder="Número de Empleado" required>
-            <select required>
-                <option value="">Seleccione Empresa</option>
-                <option value="Representaciones de Audio">Representaciones de Audio</option>
-                <option value="Equipos y Cintas">Equipos y Cintas</option>
-                <option value="Ampere">Ampere</option>
-            </select>
-            <input type="text" placeholder="Puesto" required>
-            <input type="text" placeholder="Área" required>
-            <input type="text" placeholder="Tipo de Equipo" required>
-            <input type="text" placeholder="Modelo" required>
-            <input type="text" placeholder="Marca" required>
-            <input type="text" placeholder="Número de Serie" required>
-            <input type="text" placeholder="RAM" required>
-            <input type="text" placeholder="Almacenamiento" required>
-            <input type="text" placeholder="IP" required>
-            <input type="text" placeholder="IP Wifi" required>
-            <input type="text" placeholder="MAC" required>
-            <input type="text" placeholder="ID del Producto" required>
-            <input type="text" placeholder="Hostname" required>
-            <input type="text" placeholder="Usuario SAP" required>
-            <input type="text" placeholder="Tipo de Licencia SAP" required>
-            <input type="text" placeholder="ClickView" required>
-            <input type="text" placeholder="Kit Teclado y Mouse" required>
-            <input type="text" placeholder="Monitor" required>
-            <input type="text" placeholder="Base para Laptop" required>
-            <input type="text" placeholder="Modelo de Teléfono" required>
-            <input type="text" placeholder="MAC Teléfono" required>
-            <input type="text" placeholder="Extensión" required>
-            <input type="text" placeholder="Marca de Celular" required>
-            <input type="text" placeholder="Modelo de Celular" required>
-            <input type="text" placeholder="IP Celular" required>
-            <input type="text" placeholder="MAC Celular" required>
-            <button type="submit">Guardar</button>
-        </form>
-    </div>
-
-    <button onclick="toggleDashboard()">Datos</button>
-    
-    <div class="dashboard" id="dashboard" style="display:none;">
-        <h2>Dashboard</h2>
-        <input type="text" id="searchInput" placeholder="Buscar por Nombre de Usuario" onkeyup="searchUser()">
-        <table class="table" id="dataTable">
-            <thead>
+        <!-- Formulario -->
+        <form id="inventarioForm">
+            <table>
                 <tr>
-                    <th>Nombre de Usuario</th>
-                    <th>Número de Empleado</th>
-                    <th>Empresa</th>
-                    <th>Puesto</th>
-                    <th>Área</th>
-                    <th>Tipo de Equipo</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th>Campo</th>
+                    <th>Valor</th>
                 </tr>
-            </thead>
-            <tbody id="dataBody"></tbody>
+                <tr>
+                    <td>Nombre</td>
+                    <td><input type="text" id="nombre" required></td>
+                </tr>
+                <tr>
+                    <td>Número de Empleado</td>
+                    <td><input type="number" id="numEmpleado" required></td>
+                </tr>
+                <tr>
+                    <td>Empresa</td>
+                    <td>
+                        <select id="empresa" required>
+                            <option value="Representaciones de Audio">Representaciones de Audio</option>
+                            <option value="Equipos y Cintas">Equipos y Cintas</option>
+                            <option value="Ampere">Ampere</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Puesto</td>
+                    <td><input type="text" id="puesto" required></td>
+                </tr>
+                <tr>
+                    <td>Área</td>
+                    <td><input type="text" id="area" required></td>
+                </tr>
+                <tr>
+                    <td>Tipo de equipo</td>
+                    <td><input type="text" id="tipoEquipo" required></td>
+                </tr>
+                <tr>
+                    <td>Modelo</td>
+                    <td><input type="text" id="modelo" required></td>
+                </tr>
+                <tr>
+                    <td>Marca</td>
+                    <td><input type="text" id="marca" required></td>
+                </tr>
+                <!-- Más campos según lo solicitado... -->
+                <tr>
+                    <td>Kit de teclado</td>
+                    <td>
+                        <select id="kitTeclado" required>
+                            <option value="Sí">Sí</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tipo de Licencia</td>
+                    <td>
+                        <select id="tipoLicencia" required>
+                            <option value="Office E3">Office E3</option>
+                            <option value="Office Online">Office Online</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>SAP</td>
+                    <td>
+                        <select id="sap" required>
+                            <option value="Sí">Sí</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <button type="button" class="btn" onclick="exportarPDF()">Exportar a PDF</button>
+            <button type="submit" class="btn">Guardar</button>
+        </form>
+
+        <hr>
+
+        <!-- Buscar usuario -->
+        <input type="text" id="buscarUsuario" placeholder="Buscar por nombre o empleado">
+        <button class="btn" onclick="buscarUsuario()">Buscar</button>
+
+        <!-- Dashboard -->
+        <h2>Dashboard</h2>
+        <table id="dashboard">
+            <!-- Aquí se mostrarán los usuarios -->
         </table>
-        <button onclick="generatePDF()">Generar PDF</button>
     </div>
 
     <script>
-        const data = [];
-
-        document.getElementById('inventoryForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            const formElements = event.target.elements;
-            const equipment = {
-                username: formElements[0].value,
-                employeeNumber: formElements[1].value,
-                company: formElements[2].value,
-                position: formElements[3].value,
-                area: formElements[4].value,
-                equipmentType: formElements[5].value,
-                model: formElements[6].value,
-                brand: formElements[7].value,
-                serialNumber: formElements[8].value,
-                ram: formElements[9].value,
-                storage: formElements[10].value,
-                ip: formElements[11].value,
-                wifiIp: formElements[12].value,
-                mac: formElements[13].value,
-                productId: formElements[14].value,
-                hostname: formElements[15].value,
-                sapUser: formElements[16].value,
-                sapLicense: formElements[17].value,
-                clickView: formElements[18].value,
-                keyboardMouseKit: formElements[19].value,
-                monitor: formElements[20].value,
-                laptopBase: formElements[21].value,
-                phoneModel: formElements[22].value,
-                phoneMac: formElements[23].value,
-                extension: formElements[24].value,
-                cellBrand: formElements[25].value,
-                cellModel: formElements[26].value,
-                cellIp: formElements[27].value,
-                cellMac: formElements[28].value,
-                status: 'normal' // Default status, can be changed based on your logic
-            };
-            data.push(equipment);
-            displayData();
-            event.target.reset();
-        });
-
-        function displayData() {
-            const dataBody = document.getElementById('dataBody');
-            dataBody.innerHTML = '';
-            data.forEach((equipment, index) => {
-                const row = document.createElement('tr');
-                row.className = getStatusClass(equipment.status);
-                row.innerHTML = `
-                    <td>${equipment.username}</td>
-                    <td>${equipment.employeeNumber}</td>
-                    <td>${equipment.company}</td>
-                    <td>${equipment.position}</td>
-                    <td>${equipment.area}</td>
-                    <td>${equipment.equipmentType}</td>
-                    <td>${equipment.status}</td>
-                    <td>
-                        <button onclick="editEquipment(${index})">Editar</button>
-                        <button onclick="deleteEquipment(${index})">Eliminar</button>
-                    </td>
-                `;
-                dataBody.appendChild(row);
-            });
+        // Función para exportar a PDF (puedes agregar una librería como jsPDF para realizar la exportación)
+        function exportarPDF() {
+            alert("Función de exportación a PDF aún no implementada");
         }
 
-        function getStatusClass(status) {
-            switch (status) {
-                case 'reasignado':
-                    return 'status-verde';
-                case 'normal':
-                    return 'status-amarillo';
-                case 'baja':
-                    return 'status-rojo';
-                default:
-                    return '';
-            }
-        }
-
-        function toggleDashboard() {
-            const dashboard = document.getElementById('dashboard');
-            dashboard.style.display = dashboard.style.display === 'none' ? 'block' : 'none';
-        }
-
-        function searchUser() {
-            const searchValue = document.getElementById('searchInput').value.toLowerCase();
-            const filteredData = data.filter(equipment => equipment.username.toLowerCase().includes(searchValue));
-            const dataBody = document.getElementById('dataBody');
-            dataBody.innerHTML = '';
-            filteredData.forEach((equipment, index) => {
-                const row = document.createElement('tr');
-                row.className = getStatusClass(equipment.status);
-                row.innerHTML = `
-                    <td>${equipment.username}</td>
-                    <td>${equipment.employeeNumber}</td>
-                    <td>${equipment.company}</td>
-                    <td>${equipment.position}</td>
-                    <td>${equipment.area}</td>
-                    <td>${equipment.equipmentType}</td>
-                    <td>${equipment.status}</td>
-                    <td>
-                        <button onclick="editEquipment(${index})">Editar</button>
-                        <button onclick="deleteEquipment(${index})">Eliminar</button>
-                    </td>
-                `;
-                dataBody.appendChild(row);
-            });
-        }
-
-        function editEquipment(index) {
-            alert('Edit function not implemented yet.');
-        }
-
-        function deleteEquipment(index) {
-            data.splice(index, 1);
-            displayData();
-        }
-
-        function generatePDF() {
-            alert('Generar PDF no implementado aún.');
-            // You can use a library like jsPDF to implement this functionality
+        // Función de búsqueda de usuario
+        function buscarUsuario() {
+            alert("Función de búsqueda aún no implementada");
         }
     </script>
 </body>
